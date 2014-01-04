@@ -43,7 +43,7 @@ implementation ycsb-mongodb:
 end
 
 implementation ycsb-postgresql:
-    postgres = postgresql::PostgresqlBasic(host = self.host)
+    #postgres = postgresql::PostgresqlBasic(host = self.host)
     
     wget = std::Package(host = host, name = "wget", state = "installed")
     

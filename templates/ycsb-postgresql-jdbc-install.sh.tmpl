@@ -1,0 +1,5 @@
+#!/bin/bash
+if [ ! -f "{{ directory }}/YCSB/jdbc/src/main/conf/postgresql-9.3-1100.jdbc41.jar" ]; then
+    cd {{ directory }}/YCSB/jdbc/src/main/conf/
+    wget http://jdbc.postgresql.org/download/postgresql-9.3-1100.jdbc41.jar
+fi

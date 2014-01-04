@@ -1,0 +1,11 @@
+[Unit]
+Description=Download the jdbc driver for postgresql
+
+[Service]
+Type=simple
+User=root
+
+ExecStart=/usr/bin/ycsb-postgresql-jdbc-install
+
+[Install]
+WantedBy=multi-user.target

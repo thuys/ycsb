@@ -32,7 +32,6 @@ mongo2 = mongodb::MongoDB(host = vmMDB2)
 mongo3 = mongodb::MongoDB(host = vmMDB3)
 mongo4 = mongodb::MongoDB(host = vmMDB4)
 mongo5 = mongodb::MongoDB(host = vmMDB5)
-mongo6 = mongodb::MongoDB(host = vmMDB6)
 
 mongo1Server = mongodb::MongoDBServer(host=vmMDB1)
 mongo2Server = mongodb::MongoDBServer(host=vmMDB2)

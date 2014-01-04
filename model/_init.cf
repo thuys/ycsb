@@ -20,7 +20,7 @@ implementation ycsb:
     maven = std::Package(host = host, name = "maven", state = "installed")
     
     basedir = std::Directory(host = host, path = directory, owner = "root", group = "mode", mode = 755, reload = true)
-    configdir = std::Directory(host = host, path = directory+"/config", owner = "root", group = "mode", mode = 755, reload = true, requires = basedir)
+    configdir = std::Directory(host = host, path = concat(directory,"/config"), owner = "root", group = "mode", mode = 755, reload = true, requires = basedir)
 
     
     scriptFile = std::File(host = host, path = "/usr/bin/ycsb-install",owner = "root",
@@ -36,7 +36,7 @@ end
 implementation ycsb-mongodb:
     mongoDB = mongodb::MongoDB(host = self.host)
     
-    configFile= std::ConfigFile(host = host, path = directory +"/config/mongodb.conf", content = template("ycsb/mongodb.conf.tmpl"), reload = true)
+    configFile= std::ConfigFile(host = host, path = concat(directory,"/config/mongodb.conf"), content = template("ycsb/mongodb.conf.tmpl"), reload = true)
     
 
 end
@@ -46,7 +46,7 @@ implementation ycsb-postgresql:
     
     wget = std::Package(host = host, name = "wget", state = "installed")
     
-    configFile= std::ConfigFile(host = host, path = directory+"/config/postgresql.conf", content = template("ycsb/postgresql.conf.tmpl"), reload = true)
+    configFile= std::ConfigFile(host = host, path = concat(directory,"/config/postgresql.conf"), content = template("ycsb/postgresql.conf.tmpl"), reload = true)
 
     scriptFile = std::File(host = host, path = "/usr/bin/ycsb-postgresql-jdbc-install",owner = "root",
         group = "root", mode = 755,  content = template("ycsb/ycsb-postgresql-jdbc-install.sh.tmpl"), reload = true)
@@ -64,9 +64,9 @@ end
 implementation ycsb-hbase:
     hbase = hbase::HBaseBasic(host = self.host)
     
-    configFile= std::ConfigFile(host = host, path = directory +"/config/hbase.conf", content = template("ycsb/hbase.conf.tmpl"), reload = true)
+    configFile= std::ConfigFile(host = host, path = concat(directory,"/config/hbase.conf"), content = template("ycsb/hbase.conf.tmpl"), reload = true)
 
-    configFile2 = std::ConfigFile(host = host, path = directory +"/YCSB/hbase/src/main/conf/hbase-site.xml", 
+    configFile2 = std::ConfigFile(host = host, path = concat(directory,"/YCSB/hbase/src/main/conf/hbase-site.xml"), 
                                   content = template("ycsb/hbase.conf.hbase-site.xml.tmpl"), reload = true)
     
 end

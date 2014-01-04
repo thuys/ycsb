@@ -67,4 +67,4 @@ collection1 = mongodb::MongoDBCollection(name="testcol", database = database1)
 key1 = mongodb::MongoDBKey(name = "_id", valueString = "hashed", collection = collection1)
 
 ##
-ycsb = ycsb::YCSB(host=vmYCSB)
+ycsb = ycsb::YCSB(host=vmYCSB, mongodb = mongoDBCluster)

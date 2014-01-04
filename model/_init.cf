@@ -9,9 +9,9 @@ YCSB ycsb [0:] -- [0:1] hbase::HBaseCluster hbase
 
 implement YCSB using ycsb
 
-implement YCSB using ycsb-mongodb when isset(self.mongodb) == true
-implement YCSB using ycsb-postgresql when isset(self.postgresql) == true
-implement YCSB using ycsb-hbase when isset(self.hbase) == true
+implement YCSB using ycsb-mongodb when isset(self.mongodb)
+implement YCSB using ycsb-postgresql when isset(self.postgresql)
+implement YCSB using ycsb-hbase when isset(self.hbase)
 
 
 implementation ycsb:
@@ -35,6 +35,7 @@ end
 
 implementation ycsb-mongodb:
     mongoDB = mongodb::MongoDB(host = self.host)
+    basedir = std::Directory(host = host, path = "/tmp/mongo", owner = "root", group = "root", mode = 755, reload = true)
     
     configFile= std::ConfigFile(host = host, path = "{{directory}}/config/mongodb.conf", content = template("ycsb/mongodb.conf.tmpl"), reload = true)
     

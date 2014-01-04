@@ -1,5 +1,5 @@
-{% if mongodb.accessServer is defined %}
-mongodb.url = mongodb://{{mongodb.accessServer[0].server.host.ip}}:{{mongodb.accessServer[0].port}}
+{% if mongodb.accessServers is defined %}
+mongodb.url = mongodb://{{mongodb.accessServers[0].server.host.ip}}:{{mongodb.accessServers[0].port}}
 mongodb.database = ycsb
 mongodb.writeConcern = safe
 mongodb.maxconnections = 10

@@ -43,7 +43,7 @@ implementation ycsb-mongodb:
 end
 
 implementation ycsb-postgresql:
-    #postgres = postgresql::PostgresqlBasic(host = self.host)
+    postgres = postgresql::PostgresqlBasic(host = self.host)
     
     wget = std::Package(host = host, name = "wget", state = "installed")
     
@@ -68,6 +68,6 @@ implementation ycsb-hbase:
     configFile= std::ConfigFile(host = host, path = "{{directory}}/config/hbase.conf", content = template("ycsb/hbase.conf.tmpl"), reload = true)
 
     configFile2 = std::ConfigFile(host = host, path = "{{directory}}/YCSB/hbase/src/main/conf/hbase-site.xml", 
-                                  content = template("ycsb/hbase.conf.hbase-site.xml.tmpl"), reload = true)
+                                  content = template("ycsb/hbase-site.xml.tmpl"), reload = true)
     
 end

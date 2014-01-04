@@ -1,6 +1,6 @@
 entity YCSB extends ip::services::Server:
-    string directory = "/tmp/ycsb"
     "The general YCSB, single"
+    string directory = "/tmp/ycsb"
 end
 
 YCSB ycsb [0:] -- [0:1] mongodb::MongoDBShardCluster mongodb
@@ -23,7 +23,7 @@ implementation ycsb:
     serviceFile = std::ConfigFile(host = host, path = "/lib/systemd/system/ycsb-install.service",
           content = file("ycsb/ycsb-install.service"), reload = true)
     
-    service = std::Service(host = host, name = "ycsb-install", state = "running")
+    service = std::Service(host = host, name = "ycsb-install", state = "running", onboot = false)
     service.requires = [git, maven, basedir, scriptFile, serviceFile]    
 end
 

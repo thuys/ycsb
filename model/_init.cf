@@ -1,5 +1,5 @@
 entity YCSB extends ip::services::Server:
-    "The general YCSB, single"
+    """The general YCSB, single"""
     string directory = "/tmp/ycsb"
 end
 

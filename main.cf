@@ -24,7 +24,7 @@ region2 = hbase::HBaseRegion(host = hbaseHost3)
 zookeeper = hbase::Zookeeper(host = hbaseHost4)
 hdfs = hbase::HadoopHDFS(host = hbaseHost4)
 
-cluster = hbase::HBaseCluster(master=master, regions=[region1, region2], zookeepers = zookeeper, hdfs = hdfs)
+hbaseCluster = hbase::HBaseCluster(master=master, regions=[region1, region2], zookeepers = zookeeper, hdfs = hdfs)
 
 ## MongoDB ## 
 mongo1 = mongodb::MongoDB(host = vmMDB1)
@@ -54,16 +54,16 @@ set2 = mongodb::MongoDBReplicateSet(name="repl2", nodes = [mongoN4, mongoN5])
 controller1 = mongodb::MongoDBReplicateSetController(host=mongo1, replicateSet = set1, connectingNode = mongoN1)
 controller2 = mongodb::MongoDBReplicateSetController(host=mongo4, replicateSet = set2, connectingNode = mongoN4)
 
-cluster = mongodb::MongoDBShardCluster(replicaSets = [set1, set2])
-shardController = mongodb::MongoDBShardController(host=mongo5, accessServer = access3, shardCluster = cluster)
+mongoDBCluster = mongodb::MongoDBShardCluster(replicaSets = [set1, set2])
+shardController = mongodb::MongoDBShardController(host=mongo5, accessServer = access3, shardCluster = mongoDBCluster)
 
-access1 = mongodb::MongoDBAccessServer(host=mongo2, server= mongo2Server, shardCluster = cluster)
-access2 = mongodb::MongoDBAccessServer(host=mongo3, server= mongo3Server, shardCluster = cluster)
-access3 = mongodb::MongoDBAccessServer(host=mongo4, server= mongo4Server, shardCluster = cluster)
+access1 = mongodb::MongoDBAccessServer(host=mongo2, server= mongo2Server, shardCluster = mongoDBCluster)
+access2 = mongodb::MongoDBAccessServer(host=mongo3, server= mongo3Server, shardCluster = mongoDBCluster)
+access3 = mongodb::MongoDBAccessServer(host=mongo4, server= mongo4Server, shardCluster = mongoDBCluster)
 
-config1 = mongodb::MongoDBConfigServer(host=mongo2, server= mongo2Server, shardCluster = cluster)
+config1 = mongodb::MongoDBConfigServer(host=mongo2, server= mongo2Server, shardCluster = mongoDBCluster)
 
-database1 = mongodb::MongoDBDatabase(name="testdb", shardCluster = cluster)
+database1 = mongodb::MongoDBDatabase(name="testdb", shardCluster = mongoDBCluster)
 collection1 = mongodb::MongoDBCollection(name="testcol", database = database1)
 key1 = mongodb::MongoDBKey(name = "_id", valueString = "hashed", collection = collection1)
 

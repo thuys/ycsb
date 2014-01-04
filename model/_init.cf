@@ -9,7 +9,7 @@ YCSB ycsb [0:] -- [0:1] hbase::HBaseCluster hbase
 
 implement YCSB using ycsb
 
-implementation YCSB:
+implementation yscb:
     git = std::Package(host = host, name = "git", state = "installed");
     maven = std::Package(host = host, name = "maven", state = "installed");
     basedir = std::Directory(host = host, path = directory, owner = "root", group = "mode", mode = 755, reload = true);

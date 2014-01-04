@@ -1,4 +1,4 @@
-{% if mongodb.accessServer[0] is defined %}
+{% if mongodb.accessServer is defined %}
 mongodb.url = mongodb://{{mongodb.accessServer[0].server.host.ip}}:{{mongodb.accessServer[0].port}}
 mongodb.database = ycsb
 mongodb.writeConcern = safe

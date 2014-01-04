@@ -9,9 +9,9 @@ YCSB ycsb [0:] -- [0:1] hbase::HBaseCluster hbase
 
 implement YCSB using ycsb
 
-implement YCSB using ycsb-mongodb when isset(self.mongodb)
-implement YCSB using ycsb-postgresql when isset(self.postgresql)
-implement YCSB using ycsb-hbase when isset(self.hbase)
+implement YCSB using ycsb-mongodb
+implement YCSB using ycsb-postgresql
+implement YCSB using ycsb-hbase
 
 
 implementation ycsb:

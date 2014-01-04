@@ -34,7 +34,7 @@ implementation ycsb:
 end
 
 implementation ycsb-mongodb:
-    mongoDB = mongodb::MongoDB(host = self.host)
+    mongoDBBasic = mongodb::MongoDB(host = self.host)
     basedir = std::Directory(host = host, path = "/tmp/mongo", owner = "root", group = "root", mode = 755, reload = true)
     
     configFile= std::ConfigFile(host = host, path = "{{directory}}/config/mongodb.conf", content = template("ycsb/mongodb.conf.tmpl"), reload = true)
@@ -43,7 +43,7 @@ implementation ycsb-mongodb:
 end
 
 implementation ycsb-postgresql:
-    postgres = postgresql::PostgresqlBasic(host = self.host)
+    postgresBasic = postgresql::PostgresqlBasic(host = self.host)
     
     wget = std::Package(host = host, name = "wget", state = "installed")
     

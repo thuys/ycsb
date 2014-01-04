@@ -1,0 +1,11 @@
+[Unit]
+Description=Create the root user
+
+[Service]
+Type=simple
+User=root
+
+ExecStart=/usr/bin/ycsb-install
+
+[Install]
+WantedBy=multi-user.target

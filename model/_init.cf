@@ -9,18 +9,21 @@ YCSB ycsb [0:] -- [0:1] hbase::HBaseCluster hbase
 
 implement YCSB using ycsb
 
-implementation yscb:
-    git = std::Package(host = host, name = "git", state = "installed");
-    maven = std::Package(host = host, name = "maven", state = "installed");
-    basedir = std::Directory(host = host, path = directory, owner = "root", group = "mode", mode = 755, reload = true);
+implementation ycsb:
+    git = std::Package(host = host, name = "git", state = "installed")
+    
+    maven = std::Package(host = host, name = "maven", state = "installed")
+    
+    basedir = std::Directory(host = host, path = directory, owner = "root", group = "mode", mode = 755, reload = true)
+    
     
     scriptFile = std::ConfigFile(host = host, path = "/usr/bin/ycsb-install",
-            content = template("ycsb/ycsb-install.sh.tmpl"), reload = true);
+            content = template("ycsb/ycsb-install.sh.tmpl"), reload = true)
     
     serviceFile = std::ConfigFile(host = host, path = "/lib/systemd/system/ycsb-install.service",
-          content = file("ycsb/ycsb-install.service"), reload = true);
+          content = file("ycsb/ycsb-install.service"), reload = true)
     
-    service = std::Service(host = host, name = "ycsb-install", state = "running");
+    service = std::Service(host = host, name = "ycsb-install", state = "running")
     service.requires = [git, maven, basedir, scriptFile, serviceFile]    
 end
 

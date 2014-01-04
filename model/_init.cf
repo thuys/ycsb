@@ -3,9 +3,9 @@ entity YCSB extends ip::services::Server:
     "The general YCSB, single"
 end
 
-YCSB ycsb [0:] -- [0:1] mongodb::MongoDBShardCluster
-YCSB ycsb [0:] -- [0:1] postgresql::PgpoolMain
-YCSB ycsb [0:] -- [0:1] hbase::HBaseCluster
+YCSB ycsb [0:] -- [0:1] mongodb::MongoDBShardCluster mongodb
+YCSB ycsb [0:] -- [0:1] postgresql::PgpoolMain pgpool
+YCSB ycsb [0:] -- [0:1] hbase::HBaseCluster hbase
 
 implement YCSB using ycsb
 

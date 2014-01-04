@@ -63,7 +63,7 @@ implementation ycsb-postgresql:
 end
 
 implementation ycsb-hbase:
-    hbase = hbase::HBaseBasic(host = self.host)
+    hbaseBasic = hbase::HBaseBasic(host = self.host)
     
     configFile= std::ConfigFile(host = host, path = "{{directory}}/config/hbase.conf", content = template("ycsb/hbase.conf.tmpl"), reload = true)
 

@@ -1,0 +1,3 @@
+vmYCSB = ip::Host(name = "ycsb-IMP", os = "fedora-18", ip = "172.16.32.34")
+
+ycsb = ycsb::YCSB(host=vmYCSB)

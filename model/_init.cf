@@ -1,4 +1,4 @@
-entity YCSB extends extends ip::services::Server:
+entity YCSB extends ip::services::Server:
     string directory = "/tmp/ycsb"
     "The general YCSB, single"
 end

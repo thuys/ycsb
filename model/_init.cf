@@ -20,7 +20,7 @@ implementation ycsb:
     maven = std::Package(host = host, name = "maven", state = "installed")
     
     basedir = std::Directory(host = host, path = directory, owner = "root", group = "root", mode = 755, reload = true)
-    configdir = std::Directory(host = host, path = "{{directory}}/config", owner = "root", group = "mode", mode = 755, reload = true, requires = basedir)
+    configdir = std::Directory(host = host, path = "{{directory}}/config", owner = "root", group = "root", mode = 755, reload = true, requires = basedir)
 
     
     scriptFile = std::File(host = host, path = "/usr/bin/ycsb-install",owner = "root",

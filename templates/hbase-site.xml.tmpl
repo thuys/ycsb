@@ -24,18 +24,23 @@
 <configuration>
   <property>
     <name>hbase.rootdir</name>
-    <value>hdfs://<HBASE_MASTER_SERVER>:20001/hbase</value>
+    <value>hdfs://{{ hbase.hdfs.host.host.name }}:{{ hbase.hdfs.port }}/{{ hbase.hdfs.directory }}</value>
     <description>The directory shared by region servers.
     </description>
   </property>
   <property>
     <name>hbase.master</name>
-    <value><HBASE_MASTER_SERVER>:60000</value>
+    <value>{{ hbase.master.host.host.name }}:{{ hbase.master.port }}</value>
     <description>The host and port that the HBase master runs at.
     </description>
   </property>
   <property>
     <name>hbase.zookeeper.quorum</name>
-    <value><HBASE_MASTER_SERVER></value>
+    <value>{%for zookeeper in hbase.zookeepers -%}
+                {{ zookeeper.host.host.name }}
+                    {%- if not loop.last -%} 
+                        {{ ','}} 
+                    {%- endif -%}
+            {%- endfor %}</value>
   </property>
 </configuration>

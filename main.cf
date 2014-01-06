@@ -1,15 +1,19 @@
-vmHB1 = ip::Host(name = "vmhb1", os = "fedora-18", ip = "172.16.32.2")
-vmHB2 = ip::Host(name = "vmhb2", os = "fedora-18", ip = "172.16.32.23")
-vmHB3 = ip::Host(name = "vmhb3", os = "fedora-18", ip = "172.16.32.27")
-vmHB4 = ip::Host(name = "vmhb4", os = "fedora-18", ip = "172.16.32.37")
+vmHB1 = ip::Host(name = "vmhb1", os = "fedora-18", ip = "172.16.32.29")
+vmHB2 = ip::Host(name = "vmhb2", os = "fedora-18", ip = "172.16.32.30")
+vmHB3 = ip::Host(name = "vmhb3", os = "fedora-18", ip = "172.16.32.31")
+vmHB4 = ip::Host(name = "vmhb4", os = "fedora-18", ip = "172.16.32.32")
 
-vmMDB1 = ip::Host(name = "vmmdb1", os = "fedora-18", ip = "172.16.32.25")
-vmMDB2 = ip::Host(name = "vmmdb2", os = "fedora-18", ip = "172.16.32.28")
-vmMDB3 = ip::Host(name = "vmmdb3", os = "fedora-18", ip = "172.16.32.30")
-vmMDB4 = ip::Host(name = "vmmdb4", os = "fedora-18", ip = "172.16.32.31")
-vmMDB5 = ip::Host(name = "vmmdb5", os = "fedora-18", ip = "172.16.32.32")
+vmMDB1 = ip::Host(name = "vmmdb1", os = "fedora-18", ip = "172.16.32.22")
+vmMDB2 = ip::Host(name = "vmmdb2", os = "fedora-18", ip = "172.16.32.25")
+vmMDB3 = ip::Host(name = "vmmdb3", os = "fedora-18", ip = "172.16.32.26")
+vmMDB4 = ip::Host(name = "vmmdb4", os = "fedora-18", ip = "172.16.32.27")
+vmMDB5 = ip::Host(name = "vmmdb5", os = "fedora-18", ip = "172.16.32.28")
 
-vmYCSB = ip::Host(name = "ycsb", os = "fedora-18", ip = "172.16.32.34")
+vmPG1 = ip::Host(name = "vmpg1", os = "fedora-18", ip = "172.16.32.33")
+vmPG2 = ip::Host(name = "vmpg2", os = "fedora-18", ip = "172.16.32.34")
+vmPG3 = ip::Host(name = "vmpg3", os = "fedora-18", ip = "172.16.32.35")
+
+vmYCSB = ip::Host(name = "ycsb", os = "fedora-18", ip = "172.16.32.2")
 
 ## HBASE ##
 hbaseHost1 = hbase::HBaseBasic(host = vmHB1)
@@ -66,5 +70,13 @@ database1 = mongodb::MongoDBDatabase(name="testdb", shardCluster = mongoDBCluste
 collection1 = mongodb::MongoDBCollection(name="testcol", database = database1)
 key1 = mongodb::MongoDBKey(name = "_id", valueString = "hashed", collection = collection1)
 
+## POSTGRESQL 
+
+pgNode1 = postgresql::PgpoolNode(host = vmPG1)
+pgNode2 = postgresql::PgpoolNode(host = vmPG2)
+
+pgMaster = postgresql::PgpoolMain(host = vmPG3, pgpoolNodes = [pgNode1, pgNode2])
+
+
 ##
-ycsb = ycsb::YCSB(host=vmYCSB, mongodb = mongoDBCluster)
+ycsb = ycsb::YCSB(host=vmYCSB, mongodb = mongoDBCluster, postgres = pgMaster)

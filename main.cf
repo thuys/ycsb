@@ -9,8 +9,8 @@ vmMDB3 = ip::Host(name = "vmmdb3", os = "fedora-18", ip = "172.16.32.26")
 vmMDB4 = ip::Host(name = "vmmdb4", os = "fedora-18", ip = "172.16.32.27")
 vmMDB5 = ip::Host(name = "vmmdb5", os = "fedora-18", ip = "172.16.32.28")
 
-vmPG1 = ip::Host(name = "vmpg1", os = "fedora-18", ip = "172.16.32.22")
-vmPG2 = ip::Host(name = "vmpg2", os = "fedora-18", ip = "172.16.32.34")
+vmPG1 = ip::Host(name = "vmpg1", os = "fedora-18", ip = "172.16.32.34")
+vmPG2 = ip::Host(name = "vmpg2", os = "fedora-18", ip = "172.16.32.36")
 vmPG3 = ip::Host(name = "vmpg3", os = "fedora-18", ip = "172.16.32.35")
 
 vmYCSB = ip::Host(name = "ycsb", os = "fedora-18", ip = "172.16.32.2")

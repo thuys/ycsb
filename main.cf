@@ -3,17 +3,17 @@ vmHB2 = ip::Host(name = "vmhb2", os = "fedora-18", ip = "172.16.32.10")
 vmHB3 = ip::Host(name = "vmhb3", os = "fedora-18", ip = "172.16.32.11")
 vmHB4 = ip::Host(name = "vmhb4", os = "fedora-18", ip = "172.16.32.12")
 
-vmMDB1 = ip::Host(name = "vmmdb1", os = "fedora-18", ip = "172.16.32.8")
-vmMDB2 = ip::Host(name = "vmmdb2", os = "fedora-18", ip = "172.16.32.7")
+vmMDB1 = ip::Host(name = "vmmdb1", os = "fedora-18", ip = "172.16.32.4")
+vmMDB2 = ip::Host(name = "vmmdb2", os = "fedora-18", ip = "172.16.32.5")
 vmMDB3 = ip::Host(name = "vmmdb3", os = "fedora-18", ip = "172.16.32.6")
-vmMDB4 = ip::Host(name = "vmmdb4", os = "fedora-18", ip = "172.16.32.5")
-vmMDB5 = ip::Host(name = "vmmdb5", os = "fedora-18", ip = "172.16.32.4")
+vmMDB4 = ip::Host(name = "vmmdb4", os = "fedora-18", ip = "172.16.32.7")
+vmMDB5 = ip::Host(name = "vmmdb5", os = "fedora-18", ip = "172.16.32.8")
 
 vmPG1 = ip::Host(name = "vmpg1", os = "fedora-18", ip = "172.16.32.13")
 vmPG2 = ip::Host(name = "vmpg2", os = "fedora-18", ip = "172.16.32.14")
 vmPG3 = ip::Host(name = "vmpg3", os = "fedora-18", ip = "172.16.32.15")
 
-vmYCSB = ip::Host(name = "ycsb", os = "fedora-18", ip = "172.16.32.3")
+vmYCSB = ip::Host(name = "ycsb", os = "fedora-18", ip = "172.16.32.2")
 
 ## HBASE ##
 hbaseHost1 = hbase::HBaseBasic(host = vmHB1)

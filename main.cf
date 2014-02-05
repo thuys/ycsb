@@ -70,6 +70,10 @@ database1 = mongodb::MongoDBDatabase(name="testdb", shardCluster = mongoDBCluste
 collection1 = mongodb::MongoDBCollection(name="testcol", database = database1)
 key1 = mongodb::MongoDBKey(name = "_id", valueString = "hashed", collection = collection1)
 
+databaseYCSB = mongodb::MongoDBDatabase(name="ycsb", shardCluster = mongoDBCluster)
+collectionYCSB = mongodb::MongoDBCollection(name="usertable", database = databaseYCSB)
+key1 = mongodb::MongoDBKey(name = "_id", valueString = "hashed", collection = collectionYCSB)
+
 ## POSTGRESQL 
 
 pgNode1 = postgresql::PgpoolNode(host = vmPG1)

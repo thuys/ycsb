@@ -22,13 +22,14 @@ hbaseHost3 = hbase::HBaseBasic(host = vmHB3)
 hbaseHost4 = hbase::HBaseBasic(host = vmHB4)
 
 master = hbase::HBaseMaster(host = hbaseHost1)
+master2 = hbase::HBaseMaster(host = hbaseHost4)
 region1 = hbase::HBaseRegion(host = hbaseHost2)
 region2 = hbase::HBaseRegion(host = hbaseHost3)
 
 zookeeper = hbase::Zookeeper(host = hbaseHost4)
 hdfs = hbase::HadoopHDFS(host = hbaseHost4)
 
-hbaseCluster = hbase::HBaseCluster(master=master, regions=[region1, region2], zookeepers = zookeeper, hdfs = hdfs)
+hbaseCluster = hbase::HBaseCluster(masters=[master, master2], regions=[region1, region2], zookeepers = zookeeper, hdfs = hdfs)
 
 ## MongoDB ## 
 mongo1 = mongodb::MongoDB(host = vmMDB1)

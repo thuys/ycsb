@@ -38,7 +38,11 @@ implementation ycsb-mongodb:
     basedir = std::Directory(host = host, path = "/tmp/mongo", owner = "root", group = "root", mode = 755, reload = true)
     
     configFile= std::ConfigFile(host = host, path = "{{directory}}/config/mongodb.conf", content = template("ycsb/mongodb.conf.tmpl"), reload = true)
-    
+	{% if mongodb.accessServers is defined %}
+		database1 = mongodb::MongoDBDatabase(name="ycsb", shardCluster = ycsb-mongodb)
+		collection1 = mongodb::MongoDBCollection(name="usertable", database = database1)
+		key1 = mongodb::MongoDBKey(name = "_id", valueString = "hashed", collection = ycsb-mongodb)
+	{% endif %}
 
 end
 

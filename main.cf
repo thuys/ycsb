@@ -51,11 +51,11 @@ mongoN4 = mongodb::MongoDBNode(host=mongo4, server=mongo4Server)
 mongoN5 = mongodb::MongoDBNode(host=mongo5, server=mongo5Server)
 
 
-set1 = mongodb::MongoDBReplicateSet(name="repl1", nodes = [mongoN1, mongoN2, mongoN3])
-set2 = mongodb::MongoDBReplicateSet(name="repl2", nodes = [mongoN4, mongoN5])
+set1 = mongodb::MongoDBReplicaSet(name="repl1", nodes = [mongoN1, mongoN2, mongoN3])
+set2 = mongodb::MongoDBReplicaSet(name="repl2", nodes = [mongoN4, mongoN5])
 
-controller1 = mongodb::MongoDBReplicateSetController(host=mongo1, replicateSet = set1, connectingNode = mongoN1)
-controller2 = mongodb::MongoDBReplicateSetController(host=mongo4, replicateSet = set2, connectingNode = mongoN4)
+controller1 = mongodb::MongoDBReplicaSetController(host=mongo1, replicaSet = set1, connectingNode = mongoN1)
+controller2 = mongodb::MongoDBReplicaSetController(host=mongo4, replicaSet = set2, connectingNode = mongoN4)
 
 mongoDBCluster = mongodb::MongoDBShardCluster(replicaSets = [set1, set2])
 shardController = mongodb::MongoDBShardController(host=mongo5, accessServer = access3, shardCluster = mongoDBCluster)

@@ -83,4 +83,4 @@ pgMaster = postgresql::PgpoolMain(host = vmPG3, pgpoolNodes = [pgNode1, pgNode2]
 
 
 ##
-ycsb = ycsb::YCSB(host=vmYCSB, mongodb = mongoDBCluster, postgresql = pgMaster)
+ycsb = ycsb::YCSB(host=vmYCSB, mongodb = mongoDBCluster, postgresql = pgMaster, hbase = hbaseCluster)

@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ ! -d "{{ directory }}/YCSB" ]; then
     cd {{ directory }}
-    git clone https://github.com/thuys/YCSB-1.git YCSB
+    git clone https://github.com/thuys/YCSB-New.git YCSB
     cd YCSB
     mvn clean package
 fi

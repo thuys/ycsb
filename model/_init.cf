@@ -45,7 +45,7 @@ implementation ycsb-mongodb:
     configFile.requires = std::Directory[host = host, path = "{{directory}}/config"]
     
     deleteFile= std::File(host = host, path = "{{directory}}/script/mongodb-delete", content = template("ycsb/mongodb-delete.sh.tmpl"), reload = true,
-    			owner = "root", group = "root", mode = 755))
+    			owner = "root", group = "root", mode = 755)
     deleteFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
 end
 
@@ -84,6 +84,6 @@ implementation ycsb-hbase:
     
     
     deleteFile= std::File(host = host, path = "{{directory}}/script/hbase-delete", content = template("ycsb/hbase-delete.sh.tmpl"), reload = true,
-    			owner = "root", group = "root", mode = 755))
+    			owner = "root", group = "root", mode = 755)
     deleteFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
 end

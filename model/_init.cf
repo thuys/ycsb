@@ -21,7 +21,8 @@ implementation ycsb:
     
     basedir = std::Directory(host = host, path = directory, owner = "root", group = "root", mode = 755, reload = true)
     configdir = std::Directory(host = host, path = "{{directory}}/config", owner = "root", group = "root", mode = 755, reload = true, requires = basedir)
-
+	scriptDir = std::Directory(host = host, path = "{{directory}}/script", owner = "root", group = "root", mode = 755, reload = true, requires = basedir)
+	
     
     scriptFile = std::File(host = host, path = "/usr/bin/ycsb-install",owner = "root",
         group = "root", mode = 755,  content = template("ycsb/ycsb-install.sh.tmpl"), reload = true)
@@ -42,6 +43,9 @@ implementation ycsb-mongodb:
     
     configFile= std::ConfigFile(host = host, path = "{{directory}}/config/mongodb.conf", content = template("ycsb/mongodb.conf.tmpl"), reload = true)
     configFile.requires = std::Directory[host = host, path = "{{directory}}/config"]
+    
+    deleteFile= std::ConfigFile(host = host, path = "{{directory}}/script/mongodb-delete", content = template("ycsb/mongodb-delete.sh.tmpl"), reload = true)
+    deleteFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
 end
 
 implementation ycsb-postgresql:
@@ -62,6 +66,9 @@ implementation ycsb-postgresql:
     
     service.requires = std::Service[host = host, name = "ycsb-install"]
     
+    deleteFile= std::ConfigFile(host = host, path = "{{directory}}/script/postgresql-delete", content = template("ycsb/postgresql-delete.sh.tmpl"), reload = true)
+    deleteFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
+    
 end
 
 implementation ycsb-hbase:
@@ -73,4 +80,7 @@ implementation ycsb-hbase:
                                   content = template("ycsb/hbase-site.xml.tmpl"), reload = true)
    	configFile2.requires = std::Service[host = host, name = "ycsb-install"]
     
+    
+    deleteFile= std::ConfigFile(host = host, path = "{{directory}}/script/hbase-delete", content = template("ycsb/hbase-delete.sh.tmpl"), reload = true)
+    deleteFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
 end

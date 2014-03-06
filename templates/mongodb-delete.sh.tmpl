@@ -1,0 +1,6 @@
+#!/bin/bash
+mkdir -p /tmp/mongodbsharded/
+echo "use ycsb" > /tmp/mongodbsharded/table.delete.in
+echo "db.usertable.remove()" >> > /tmp/mongodbsharded/table.delete.in
+
+cat /tmp/mongodbsharded/table.delete.in | mongo --host {{mongodb.accessServers[0].server.host.ip}}:{{mongodb.accessServers[0].port}}

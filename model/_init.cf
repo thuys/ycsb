@@ -44,7 +44,8 @@ implementation ycsb-mongodb:
     configFile= std::ConfigFile(host = host, path = "{{directory}}/config/mongodb.conf", content = template("ycsb/mongodb.conf.tmpl"), reload = true)
     configFile.requires = std::Directory[host = host, path = "{{directory}}/config"]
     
-    deleteFile= std::ConfigFile(host = host, path = "{{directory}}/script/mongodb-delete", content = template("ycsb/mongodb-delete.sh.tmpl"), reload = true)
+    deleteFile= std::File(host = host, path = "{{directory}}/script/mongodb-delete", content = template("ycsb/mongodb-delete.sh.tmpl"), reload = true,
+    			owner = "root", group = "root", mode = 755))
     deleteFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
 end
 
@@ -66,7 +67,8 @@ implementation ycsb-postgresql:
     
     service.requires = std::Service[host = host, name = "ycsb-install"]
     
-    deleteFile= std::ConfigFile(host = host, path = "{{directory}}/script/postgresql-delete", content = template("ycsb/postgresql-delete.sh.tmpl"), reload = true)
+    deleteFile= std::File(host = host, path = "{{directory}}/script/postgresql-delete", content = template("ycsb/postgresql-delete.sh.tmpl"), reload = true,
+    			owner = "root", group = "root", mode = 755)
     deleteFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
     
 end
@@ -81,6 +83,7 @@ implementation ycsb-hbase:
    	configFile2.requires = std::Service[host = host, name = "ycsb-install"]
     
     
-    deleteFile= std::ConfigFile(host = host, path = "{{directory}}/script/hbase-delete", content = template("ycsb/hbase-delete.sh.tmpl"), reload = true)
+    deleteFile= std::File(host = host, path = "{{directory}}/script/hbase-delete", content = template("ycsb/hbase-delete.sh.tmpl"), reload = true,
+    			owner = "root", group = "root", mode = 755))
     deleteFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
 end

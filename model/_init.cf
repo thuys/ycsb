@@ -29,6 +29,9 @@ implementation ycsb:
     serviceFile = std::File(host = host, path = "/lib/systemd/system/ycsb-install.service",owner = "root",
         group = "root", mode = 755,  content = file("ycsb/ycsb-install.service"), reload = true)
     
+    workloadFile = std::File(host = host, path = "{{directory}}/YCSB/workloads/workload-thomas",owner = "root",
+        group = "root", mode = 755,  content = files("ycsb/workload-thomas"), reload = true)
+        
     service = std::Service(host = host, name = "ycsb-install", state = "running", onboot = false)
     service.requires = [git, maven, basedir, scriptFile, serviceFile]    
 end
@@ -38,6 +41,7 @@ implementation ycsb-mongodb:
     basedir = std::Directory(host = host, path = "/tmp/mongo", owner = "root", group = "root", mode = 755, reload = true)
     
     configFile= std::ConfigFile(host = host, path = "{{directory}}/config/mongodb.conf", content = template("ycsb/mongodb.conf.tmpl"), reload = true)
+    configFile.requires = std::Directory[host = host, path = "{{directory}}/config"]
 end
 
 implementation ycsb-postgresql:
@@ -46,7 +50,7 @@ implementation ycsb-postgresql:
     wget = std::Package(host = host, name = "wget", state = "installed")
     
     configFile= std::ConfigFile(host = host, path = "{{directory}}/config/postgresql.conf", content = template("ycsb/postgresql.conf.tmpl"), reload = true)
-
+	configFile.requires = std::Directory[host = host, path = "{{directory}}/config"]
     scriptFile = std::File(host = host, path = "/usr/bin/ycsb-postgresql-jdbc-install",owner = "root",
         group = "root", mode = 755,  content = template("ycsb/ycsb-postgresql-jdbc-install.sh.tmpl"), reload = true)
     
@@ -64,8 +68,9 @@ implementation ycsb-hbase:
     hbaseBasic = hbase::HBaseBasic(host = self.host)
     
     configFile= std::ConfigFile(host = host, path = "{{directory}}/config/hbase.conf", content = template("ycsb/hbase.conf.tmpl"), reload = true)
-
+	configFile.requires = std::Directory[host = host, path = "{{directory}}/config"]
     configFile2 = std::ConfigFile(host = host, path = "{{directory}}/YCSB/hbase/src/main/conf/hbase-site.xml", 
                                   content = template("ycsb/hbase-site.xml.tmpl"), reload = true)
+   	configFile2.requires = std::Service[host = host, name = "ycsb-install"]
     
 end

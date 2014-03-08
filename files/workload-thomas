@@ -17,8 +17,6 @@
 # Yahoo! Cloud System Benchmark
 # Workload Thomas: Update heavy workload
 
-recordcount=1000
-operationcount=1000
 workload=com.yahoo.ycsb.workloads.CoreWorkload
 
 readallfields=true

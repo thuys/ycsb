@@ -47,6 +47,15 @@ implementation ycsb-mongodb:
     deleteFile= std::File(host = host, path = "{{directory}}/script/mongodb-delete", content = template("ycsb/mongodb-delete.sh.tmpl"), reload = true,
     			owner = "root", group = "root", mode = 755)
     deleteFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
+    
+    hardFile= std::File(host = host, path = "{{directory}}/script/mongodb-remote-hard", content = file("ycsb/mongodb-remote-hard.sh"), reload = true,
+    			owner = "root", group = "root", mode = 755)
+    hardFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
+    
+    
+    softFile= std::File(host = host, path = "{{directory}}/script/mongodb-remote-soft", content = file("ycsb/mongodb-remote-soft.sh"), reload = true,
+    			owner = "root", group = "root", mode = 755)
+    softFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
 end
 
 implementation ycsb-postgresql:
@@ -71,6 +80,20 @@ implementation ycsb-postgresql:
     			owner = "root", group = "root", mode = 755)
     deleteFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
     
+        hardFile= std::File(host = host, path = "{{directory}}/script/postgresql-remote-hard", content = file("ycsb/postgresql-remote-hard.sh"), reload = true,
+    			owner = "root", group = "root", mode = 755)
+    hardFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
+    
+    
+    softFile= std::File(host = host, path = "{{directory}}/script/postgresql-remote-soft", content = file("ycsb/postgresql-remote-soft.sh"), reload = true,
+    			owner = "root", group = "root", mode = 755)
+    softFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
+    
+    
+    softFile= std::File(host = host, path = "{{directory}}/script/postgresql-remote-recover", content = template("ycsb/postgresql-remote-recover.sh.tmpl"), reload = true,
+    			owner = "root", group = "root", mode = 755)
+    softFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
+    
 end
 
 implementation ycsb-hbase:
@@ -86,4 +109,13 @@ implementation ycsb-hbase:
     deleteFile= std::File(host = host, path = "{{directory}}/script/hbase-delete", content = template("ycsb/hbase-delete.sh.tmpl"), reload = true,
     			owner = "root", group = "root", mode = 755)
     deleteFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
+    
+    hardFile= std::File(host = host, path = "{{directory}}/script/hbase-remote-hard", content = file("ycsb/hbase-remote-hard.sh"), reload = true,
+    			owner = "root", group = "root", mode = 755)
+    hardFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
+    
+    
+    softFile= std::File(host = host, path = "{{directory}}/script/hbase-remote-soft", content = file("ycsb/hbase-remote-soft.sh"), reload = true,
+    			owner = "root", group = "root", mode = 755)
+    softFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
 end

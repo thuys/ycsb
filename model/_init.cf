@@ -44,6 +44,10 @@ implementation ycsb:
     
     service = std::Service(host = host, name = "ycsb-install", state = "running", onboot = false)
     service.requires = [git, maven, basedir, scriptFile, serviceFile]    
+    
+    benchScript= std::File(host = host, path = "{{directory}}/script/ycsb-script", content = template("ycsb/ycsb-script.sh.tmpl"), reload = true,
+    			owner = "root", group = "root", mode = 755)
+    benchScript.requires = scriptDir
 end
 
 implementation ycsb-mongodb:
@@ -69,6 +73,10 @@ implementation ycsb-mongodb:
     eventGenerator= std::File(host = host, path = "{{directory}}/script/mongodb-event-generator", content = template("ycsb/mongodb-event-xml-generator.sh.tmpl"), reload = true,
     			owner = "root", group = "root", mode = 755)
     eventGenerator.requires = std::Directory[host = host, path = "{{directory}}/script"]
+    
+    benchScript= std::File(host = host, path = "{{directory}}/script/mongodb-script", content = template("ycsb/mongodb-script.sh.tmpl"), reload = true,
+    			owner = "root", group = "root", mode = 755)
+    benchScript.requires = eventGenerator
 end
 
 implementation ycsb-postgresql:
@@ -110,6 +118,10 @@ implementation ycsb-postgresql:
     eventGenerator= std::File(host = host, path = "{{directory}}/script/postgresql-event-generator", content = template("ycsb/postgresql-event-xml-generator.sh.tmpl"), reload = true,
     			owner = "root", group = "root", mode = 755)
     eventGenerator.requires = std::Directory[host = host, path = "{{directory}}/script"]
+    
+    	benchScript= std::File(host = host, path = "{{directory}}/script/postgresql-script", content = template("ycsb/postgresql-script.sh.tmpl"), reload = true,
+    			owner = "root", group = "root", mode = 755)
+    benchScript.requires = eventGenerator
     
 end
 

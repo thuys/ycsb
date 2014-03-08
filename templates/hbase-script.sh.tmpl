@@ -5,9 +5,9 @@
 
 mkdir -p {{ directory }}/results/hbase
             
-     {{ directory }}/script/hbase-delete
-	{{directory}}/YCSB/bin/ycsb run hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 100  > {{ directory }}/results/hbase/unlimited.dat	
-	sleep 20s
+{{ directory }}/script/hbase-delete
+{{directory}}/YCSB/bin/ycsb run hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 100  > {{ directory }}/results/hbase/unlimited.dat	
+sleep 20s
 
 for t in 100 300 500 700 900 1000 1250 1500 1750 2000 2500 3000 3500 4000 5000 6000; do
 	for i in 2;do
@@ -25,7 +25,7 @@ for host in {%for region in hbase.regions -%}
                     {%- endif -%}
             {%- endfor %}; do 
             
- 	#HBase - Continuous run: 1000seconds!
+ 	#HBase - Continuous run: 900s!
 	for run in 1 2 ;do
 		{{ directory }}/script/hbase-delete
 		{{directory}}/YCSB/bin/ycsb run hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-continuous -s -target 50 -p eventFile={{directory}}/config/hbase/hbase-event-$host.xml > {{directory}}/results/hbase/continuous-$host-$run.dat

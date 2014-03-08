@@ -2,7 +2,7 @@
 {% if postgresql.host is defined %}
 mkdir -p {{ directory }}/config/postgresql
 rm -r -f {{ directory }}/config/postgresql/*
-{%for nodes in postgresql.pgpoolNodes %}
+{%for node in postgresql.pgpoolNodes %}
 	echo "<?xml version=\"1.0\"?>
 	<events>
 		<event id=\"Down\" startInMS=\"300000\">

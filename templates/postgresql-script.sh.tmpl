@@ -3,13 +3,16 @@
 
 {{directory}}/script/postgresql-event-generator
 
+createdb -U postgres -h {{ postgresql.host.name }} -p {{postgresql.port}} usertable
+psql -d usertable -U postgres -h {{ postgresql.host.name }} -p {{postgresql.port}} -f {{directory}}/YCSB/jdbc/src/main/resources/sql/create_table.sql
+
 mkdir -p {{ directory }}/results/postgresql
             
 {{ directory }}/script/postgresql-delete
 {{directory}}/YCSB/bin/ycsb run jdbc -P {{directory}}/config/postgresql.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 100  > {{ directory }}/results/postgresql/unlimited.dat	
 sleep 20s
 
-for t in 100 300 500 700 900 1000 1250 1500 1750 2000 2500 3000 3500 4000 5000 6000; do
+for t in 20 50 100 150 200 250 300 400 500 600 700; do
 	for i in 2;do
 	{{ directory }}/script/postgresql-delete
 	{{directory}}/YCSB/bin/ycsb run jdbc -P {{directory}}/config/postgresql.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 100 -target $t  > {{ directory }}/results/postgresql/threads-$t-$i.dat

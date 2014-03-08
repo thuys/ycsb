@@ -12,6 +12,6 @@ rm -r -f {{ directory }}/config/postgresql/*
 			{{ directory }}/script/postgresql-remote-soft postgresql restart {{ node.host.name }};
 			{{ directory }}/script/postgresql-remote-recover {{ loop.index0}};
 		</event>
-	</events>" > {{ directory }}/config/hbase/hbase-event-{{ node.host.name }}.xml
+	</events>" > {{ directory }}/config/hbase/postgresql-event-{{ node.host.name }}.xml
 {% endfor %}
 {% endif %}

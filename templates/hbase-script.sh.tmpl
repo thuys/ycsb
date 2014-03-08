@@ -12,7 +12,7 @@ mkdir -p {{ directory }}/results/hbase
 for t in 100 300 500 700 900 1000 1250 1500 1750 2000 2500 3000 3500 4000 5000 6000; do
 	for i in 2;do
 	{{ directory }}/script/hbase-delete
-	{{directory}}/YCSB/bin/ycsb run hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 100 -threads 100 -target $t  > {{ directory }}/results/hbase/threads-$t-$i.dat
+	{{directory}}/YCSB/bin/ycsb run hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 100 -target $t  > {{ directory }}/results/hbase/threads-$t-$i.dat
 
 	done
 done     

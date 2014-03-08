@@ -119,7 +119,7 @@ implementation ycsb-hbase:
     			owner = "root", group = "root", mode = 755)
     softFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
     
-    eventGenerator= std::File(host = host, path = "{{directory}}/script/hbase-event-generator", content = template("ycsb/postgresql-remote-recover.sh.tmpl"), reload = true,
+    eventGenerator= std::File(host = host, path = "{{directory}}/script/hbase-event-generator", content = template("ycsb/hbase-event-xml-generator.sh.tmpl"), reload = true,
     			owner = "root", group = "root", mode = 755)
     eventGenerator.requires = std::Directory[host = host, path = "{{directory}}/script"]
 end

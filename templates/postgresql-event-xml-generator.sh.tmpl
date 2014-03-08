@@ -1,0 +1,17 @@
+#!/bin/bash
+{% if postgresql.host is defined %}
+mkdir -p {{ directory }}/config/postgresql
+rm -r -f {{ directory }}/config/postgresql/*
+{%for nodes in postgresql.pgpoolNodes %}
+	echo "<?xml version=\"1.0\"?>
+	<events>
+		<event id=\"Down\" startInMS=\"300000\">
+			{{ directory }}/script/postgresql-remote-soft postgresql stop {{ node.host.name }}
+		</event>
+		<event id=\"Up\" startInMS=\"600000\">
+			{{ directory }}/script/postgresql-remote-soft postgresql restart {{ node.host.name }};
+			{{ directory }}/script/postgresql-remote-recover {{ loop.index0}};
+		</event>
+	</events>" > {{ directory }}/config/hbase/hbase-event-{{ node.host.name }}.xml
+{% endfor %}
+{% endif %}

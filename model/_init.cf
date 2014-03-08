@@ -98,6 +98,10 @@ implementation ycsb-postgresql:
     			owner = "root", group = "root", mode = 755)
     remoteFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
     
+        eventGenerator= std::File(host = host, path = "{{directory}}/script/postgresql-event-generator", content = template("ycsb/postgresql-event-xml-generator.sh.tmpl"), reload = true,
+    			owner = "root", group = "root", mode = 755)
+    eventGenerator.requires = std::Directory[host = host, path = "{{directory}}/script"]
+    
 end
 
 implementation ycsb-hbase:

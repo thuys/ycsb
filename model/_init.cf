@@ -48,7 +48,7 @@ implementation ycsb-mongodb:
     			owner = "root", group = "root", mode = 755)
     deleteFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
     
-    hardFile= std::File(host = host, path = "{{directory}}/script/mongodb-remote-hard", content = file("ycsb/mongodb-remote-hard.sh"), reload = true,
+    hardFile= std::File(host = host, path = "{{directory}}/script/mongodb-remote-hard-stop", content = file("ycsb/mongodb-remote-hard-stop.sh"), reload = true,
     			owner = "root", group = "root", mode = 755)
     hardFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
     
@@ -80,7 +80,7 @@ implementation ycsb-postgresql:
     			owner = "root", group = "root", mode = 755)
     deleteFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
     
-        hardFile= std::File(host = host, path = "{{directory}}/script/postgresql-remote-hard", content = file("ycsb/postgresql-remote-hard.sh"), reload = true,
+    hardFile= std::File(host = host, path = "{{directory}}/script/postgresql-remote-hard-stop", content = file("ycsb/postgresql-remote-hard-stop.sh"), reload = true,
     			owner = "root", group = "root", mode = 755)
     hardFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
     
@@ -110,7 +110,7 @@ implementation ycsb-hbase:
     			owner = "root", group = "root", mode = 755)
     deleteFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
     
-    hardFile= std::File(host = host, path = "{{directory}}/script/hbase-remote-hard", content = file("ycsb/hbase-remote-hard.sh"), reload = true,
+    hardFile= std::File(host = host, path = "{{directory}}/script/hbase-remote-hard-stop", content = file("ycsb/hbase-remote-hard-stop.sh"), reload = true,
     			owner = "root", group = "root", mode = 755)
     hardFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
     

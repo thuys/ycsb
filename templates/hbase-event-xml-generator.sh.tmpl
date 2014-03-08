@@ -2,7 +2,7 @@
 mkdir -p {{ directory }}/config/hbase
 rm -r -f {{ directory }}/config/hbase/*
 for host in {%for region in hbase.regions -%}
-                {{ host.host.name }}
+                {{ region.host.host.name }}
                     {%- if not loop.last -%} 
                         {{ ' '}} 
                     {%- endif -%}

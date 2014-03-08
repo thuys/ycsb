@@ -90,9 +90,9 @@ implementation ycsb-postgresql:
     softFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
     
     
-    softFile= std::File(host = host, path = "{{directory}}/script/postgresql-remote-recover", content = template("ycsb/postgresql-remote-recover.sh.tmpl"), reload = true,
+    remoteFile= std::File(host = host, path = "{{directory}}/script/postgresql-remote-recover", content = template("ycsb/postgresql-remote-recover.sh.tmpl"), reload = true,
     			owner = "root", group = "root", mode = 755)
-    softFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
+    remoteFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
     
 end
 

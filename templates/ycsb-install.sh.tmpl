@@ -3,5 +3,8 @@ if [ ! -d "{{ directory }}/YCSB" ]; then
     cd {{ directory }}
     git clone https://github.com/thuys/YCSB-1.git YCSB
     cd YCSB
-    mvn clean package
+else 
+	cd {{ directory }}/YCSB
+	git pull
 fi
+mvn clean package

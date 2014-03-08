@@ -31,3 +31,10 @@ requestdistribution=zipfian
 maxscanlength=100
 
 scanlengthdistribution=uniform
+
+threadcount=20
+recordcount=800000
+operationcount=800000
+measurementtype=timeseries
+timeseries.granularity=1000
+maxexecutiontime=900

@@ -34,8 +34,8 @@ implementation ycsb:
         group = "root", mode = 755,  content = file("ycsb/workload-ycsb-thomas"), reload = true)
     workloadFile.requires = configdir
     
-    workloadFileCont = std::File(host = host, path = "{{directory}}/config/workload-ycsb-thomas-continious",owner = "root",
-        group = "root", mode = 755,  content = file("ycsb/workload-ycsb-thomas-continious"), reload = true)
+    workloadFileCont = std::File(host = host, path = "{{directory}}/config/workload-ycsb-thomas-continuous",owner = "root",
+        group = "root", mode = 755,  content = file("ycsb/workload-ycsb-thomas-continuous"), reload = true)
     workloadFileCont.requires = configdir
     
     workloadFileStress = std::File(host = host, path = "{{directory}}/config/workload-ycsb-thomas-stress-load",owner = "root",
@@ -139,4 +139,10 @@ implementation ycsb-hbase:
     eventGenerator= std::File(host = host, path = "{{directory}}/script/hbase-event-generator", content = template("ycsb/hbase-event-xml-generator.sh.tmpl"), reload = true,
     			owner = "root", group = "root", mode = 755)
     eventGenerator.requires = std::Directory[host = host, path = "{{directory}}/script"]
+
+	benchScript= std::File(host = host, path = "{{directory}}/script/hbase-script", content = template("ycsb/hbase-script.sh.tmpl"), reload = true,
+    			owner = "root", group = "root", mode = 755)
+    benchScript.requires = eventGenerator
+    
+    
 end

@@ -34,6 +34,14 @@ implementation ycsb:
         group = "root", mode = 755,  content = file("ycsb/workload-ycsb-thomas"), reload = true)
     workloadFile.requires = configdir
     
+    workloadFileCont = std::File(host = host, path = "{{directory}}/config/workload-ycsb-thomas-continious",owner = "root",
+        group = "root", mode = 755,  content = file("ycsb/workload-ycsb-thomas-continious"), reload = true)
+    workloadFileCont.requires = configdir
+    
+    workloadFileStress = std::File(host = host, path = "{{directory}}/config/workload-ycsb-thomas-continious",owner = "root",
+        group = "root", mode = 755,  content = file("ycsb/workload-ycsb-thomas-continious"), reload = true)
+    workloadFileStress.requires = configdir
+    
     service = std::Service(host = host, name = "ycsb-install", state = "running", onboot = false)
     service.requires = [git, maven, basedir, scriptFile, serviceFile]    
 end

@@ -1,0 +1,28 @@
+#!/bin/bash
+{% if mongodb.accessServers is defined %}
+mkdir -p {{ directory }}/config/mongodb
+rm -r -f {{ directory }}/config/mongodb/*
+for host in {%for set in mongodb.replicaSets -%}
+				{%for node in set.nodes -%}
+	                {{ node.server.host.name }}
+	                    {%- if not loop.last -%} 
+	                        {{ ' '}} 
+	                    {%- endif -%}
+                 {%- endfor %}  {{ ' '}}
+            {%- endfor %} {%for node in mongodb.singleNodes -%}
+	                {{ node.server.host.name }}
+	                    {%- if not loop.last -%} 
+	                        {{ ' '}} 
+	                    {%- endif -%}
+                 {%- endfor %}; do
+	echo "<?xml version=\"1.0\"?>
+	<events>
+		<event id=\"Down\" startInMS=\"300000\">
+			/tmp/ycsb/script/mongodb-remote-soft mongod stop $host
+		</event>
+		<event id=\"Up\" startInMS=\"600000\">
+			/tmp/ycsb/script/mongodb-remote-soft mongod restart $host
+		</event>
+	</events>" > {{ directory }}/config/mongodb/mongodb-event-$host.xml
+done
+{% endif %}

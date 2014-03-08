@@ -1,4 +1,5 @@
 #!/bin/bash
+{% if hbase.hdfs is defined %}
 mkdir -p {{ directory }}/config/hbase
 rm -r -f {{ directory }}/config/hbase/*
 for host in {%for region in hbase.regions -%}
@@ -17,3 +18,4 @@ for host in {%for region in hbase.regions -%}
 		</event>
 	</events>" > {{ directory }}/config/hbase/hbase-event-$host.xml
 done
+{% endif %}

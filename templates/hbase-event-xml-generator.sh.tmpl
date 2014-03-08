@@ -1,0 +1,19 @@
+#!/bin/bash
+mkdir -p {{ directory }}/config/hbase
+rm -r -f {{ directory }}/config/hbase/*
+for host in {%for region in hbase.regions -%}
+                {{ host.host.name }}
+                    {%- if not loop.last -%} 
+                        {{ ' '}} 
+                    {%- endif -%}
+            {%- endfor %}; do
+	echo "<?xml version=\"1.0\"?>
+	<events>
+		<event id=\"Down\" startInMS=\"300000\">
+			/tmp/ycsb/script/hbase-remote-soft regionserver stop $host
+		</event>
+		<event id=\"Up\" startInMS=\"600000\">
+			/tmp/ycsb/script/hbase-remote-soft regionserver restart $host
+		</event>
+	</events>" > {{ directory }}/config/hbase/hbase-event-$host.xml
+done

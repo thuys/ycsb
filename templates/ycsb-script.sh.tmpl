@@ -1,6 +1,7 @@
 #!/bin/bash
-mkdir -p {{ directory }}/results
 
+mkdir -p {{ directory }}/results
+rm -f -r {{ directory }}/results/*
 {{directory}}/script/hbase-script
 {{directory}}/script/mongodb-script
 {{directory}}/script/postgresql-script

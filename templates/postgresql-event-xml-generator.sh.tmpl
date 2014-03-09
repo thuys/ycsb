@@ -9,8 +9,7 @@ rm -r -f {{ directory }}/config/postgresql/*
 			{{ directory }}/script/postgresql-remote-soft postgresql stop {{ node.host.name }}
 		</event>
 		<event id=\"Up\" startInMS=\"600000\">
-			{{ directory }}/script/postgresql-remote-soft postgresql restart {{ node.host.name }};
-			{{ directory }}/script/postgresql-remote-recover {{ loop.index0}};
+			{{ directory }}/script/postgresql-remote-recover {{ loop.index0}} {{ node.host.name }}
 		</event>
 	</events>" > {{ directory }}/config/postgresql/postgresql-event-{{ node.host.name }}.xml
 {% endfor %}

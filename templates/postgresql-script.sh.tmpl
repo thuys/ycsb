@@ -7,7 +7,8 @@ createdb -U postgres -h {{ postgresql.host.name }} -p {{postgresql.port}} userta
 psql -d usertable -U postgres -h {{ postgresql.host.name }} -p {{postgresql.port}} -f {{directory}}/YCSB/jdbc/src/main/resources/sql/create_table.sql
 
 mkdir -p {{ directory }}/results/postgresql
-            
+rm -f -r {{ directory }}/results/postgresql/*  
+       
 {{ directory }}/script/postgresql-delete
 {{directory}}/YCSB/bin/ycsb run jdbc -P {{directory}}/config/postgresql.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 100  > {{ directory }}/results/postgresql/unlimited.dat	
 sleep 20s

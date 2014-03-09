@@ -4,7 +4,7 @@
 {{directory}}/script/hbase-event-generator
 
 mkdir -p {{ directory }}/results/hbase
-            
+rm -f -r {{ directory }}/results/hbase/*         
 {{ directory }}/script/hbase-delete
 {{directory}}/YCSB/bin/ycsb run hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 100  > {{ directory }}/results/hbase/unlimited.dat	
 sleep 20s

@@ -30,8 +30,12 @@ region1 = hbase::HBaseRegion(host = hbaseHost2)
 region2 = hbase::HBaseRegion(host = hbaseHost3)
 region3 = hbase::HBaseRegion(host = hbaseHost5)
 
+dataNode1 = hbase::HadoopDataHDFS(host=hbaseHost2)
+dataNode2 = hbase::HBaseRegion(host = hbaseHost3)
+dataNode3 = hbase::HBaseRegion(host = hbaseHost5)
+
 zookeeper = hbase::Zookeeper(host = hbaseHost4)
-hdfs = hbase::HadoopHDFS(host = hbaseHost4)
+hdfs = hbase::HadoopHDFS(host = hbaseHost4, dataNodes=[dataNode1, dataNode2, dataNode3])
 
 hbaseCluster = hbase::HBaseCluster(masters=[master, master2], regions=[region1, region2, region3], zookeepers = zookeeper, hdfs = hdfs)
 

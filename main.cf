@@ -83,9 +83,9 @@ databaseYCSB = mongodb::MongoDBDatabase(name="ycsb", shardCluster = mongoDBClust
 collectionYCSB = mongodb::MongoDBCollection(name="usertable", database = databaseYCSB)
 keyYCSB = mongodb::MongoDBKey(name = "_id", valueString = "hashed", collection = collectionYCSB)
 
-databaseYCSB = mongodb::MongoDBDatabase(name="ycsb-2", shardCluster = mongoDBCluster)
-collectionYCSB = mongodb::MongoDBCollection(name="usertable", database = databaseYCSB)
-keyYCSB = mongodb::MongoDBKey(name = "_id", valueString = "hashed", collection = collectionYCSB)
+databaseYCSB2 = mongodb::MongoDBDatabase(name="ycsb-2", shardCluster = mongoDBCluster)
+collectionYCSB2 = mongodb::MongoDBCollection(name="usertable", database = databaseYCSB2)
+keyYCSB2 = mongodb::MongoDBKey(name = "_id", valueString = "hashed", collection = collectionYCSB2)
 
 ## POSTGRESQL 
 

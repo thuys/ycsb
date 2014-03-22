@@ -6,14 +6,20 @@
 mkdir -p {{ directory }}/results/hbase
 rm -f -r {{ directory }}/results/hbase/* 
 
+touch {{ directory }}/results/hbase/timings.out
 ssh {{ hbase.masters[0].host.host.name }} 'echo "create \"{{table}}\", \"family\"" | hbase shell'
-        
+
+
+echo "Start $(date)" >>  {{ directory }}/results/hbase/timings.out        
 {{ directory }}/script/hbase-delete
+
 {{directory}}/YCSB/bin/ycsb run hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 100  > {{ directory }}/results/hbase/unlimited.dat	
 sleep 20s
 
+
 for t in 100 300 500 700 900 1000 1250 1500 1750 2000 2500 3000 3500 4000 5000 6000; do
 	for i in 2;do
+	echo "Hockey $t $i $(date)" >>  {{ directory }}/results/hbase/timings.out        
 	{{ directory }}/script/hbase-delete
 	{{directory}}/YCSB/bin/ycsb run hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 100 -target $t  > {{ directory }}/results/hbase/threads-$t-$i.dat
 
@@ -30,6 +36,8 @@ for host in {%for region in hbase.regions -%}
             
  	#HBase - Continuous run: 900s!
 	for run in 1 2 ;do
+		echo "Continiuum $host $run $(date)" >>  {{ directory }}/results/hbase/timings.out        
+	
 		{{ directory }}/script/hbase-delete
 		{{directory}}/YCSB/bin/ycsb run hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-continuous -s -target 200 -p eventFile={{directory}}/config/hbase/hbase-event-$host.xml > {{directory}}/results/hbase/continuous-$host-$run.dat
 		sleep 100s

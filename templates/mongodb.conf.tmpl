@@ -1,7 +1,6 @@
 {% if mongodb.accessServers is defined %}
 mongodb.url = mongodb://{{mongodb.accessServers[0].server.host.ip}}:{{mongodb.accessServers[0].port}}
-mongodb.database = ycsb
+mongodb.database = {{table}}
 mongodb.writeConcern = safe
 mongodb.maxconnections = 100
-table={{table}}
 {% endif %}

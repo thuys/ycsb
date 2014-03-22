@@ -2,4 +2,4 @@
 mkdir -p /tmp/postgresqlshared/
 echo "truncate usertable;" > /tmp/postgresqlshared/table.delete.in
 
-cat /tmp/postgresqlshared/table.delete.in | psql -h {{postgresql.host.name}} -p {{postgresql.port}} -d usertable
+cat /tmp/postgresqlshared/table.delete.in | psql -h {{postgresql.host.name}} -p {{postgresql.port}} -d {{table}}

@@ -1,2 +1,2 @@
 #!/bin/bash
-ssh {{ hbase.masters[0].host.host.name }} 'echo "truncate \"usertable\"" | hbase shell'
+ssh {{ hbase.masters[0].host.host.name }} 'echo "truncate \"{{table}}\"" | hbase shell'

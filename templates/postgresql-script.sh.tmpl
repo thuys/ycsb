@@ -3,8 +3,8 @@
 
 {{directory}}/script/postgresql-event-generator
 
-createdb -U postgres -h {{ postgresql.host.name }} -p {{postgresql.port}} usertable
-psql -d usertable -U postgres -h {{ postgresql.host.name }} -p {{postgresql.port}} -f {{directory}}/YCSB/jdbc/src/main/resources/sql/create_table.sql
+createdb -U postgres -h {{ postgresql.host.name }} -p {{postgresql.port}} {{table}}
+psql -d {{table}} -U postgres -h {{ postgresql.host.name }} -p {{postgresql.port}} -f {{directory}}/YCSB/jdbc/src/main/resources/sql/create_table.sql
 
 mkdir -p {{ directory }}/results/postgresql
 rm -f -r {{ directory }}/results/postgresql/*  

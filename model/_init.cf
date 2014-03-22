@@ -1,6 +1,7 @@
 entity YCSB extends ip::services::Server:
     """The general YCSB, single"""
     string directory = "/tmp/ycsb"
+    string table = "usertable"
 end
 
 YCSB ycsb [0:] -- [0:1] mongodb::MongoDBShardCluster mongodb

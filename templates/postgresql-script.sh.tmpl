@@ -18,18 +18,18 @@ for t in 20 50 100 150 200 250 300 400 500 600 700; do
 	{{ directory }}/script/postgresql-delete
 	{{directory}}/YCSB/bin/ycsb run jdbc -P {{directory}}/config/postgresql.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 30 -target $t  > {{ directory }}/results/postgresql/threads-$t-$i.dat
 
-	done
-done     
+	done;
+done;     
 
 sleep 100s
-{%for node in postgresql.pgpoolNodes -%}
+{%for node in postgresql.pgpoolNodes %}
            
  	#postgresql - Continuous run: 900s!
 	for run in 1 2 ;do
-		{{ directory }}/script/postgresql-delete
-		{{directory}}/YCSB/bin/ycsb run jdbc -P {{directory}}/config/postgresql.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-continuous -s -target 20 -p eventFile={{directory}}/config/postgresql/postgresql-event-{{ node.host.name }}.xml > {{directory}}/results/postgresql/continuous-{{ node.host.name }}-$run.dat
-		sleep 50s
-		{{ directory }}/script/postgresql-remote-recover {{ loop.index0}} {{ node.host.name }}
-	done
-{%- endfor %}
+		{{ directory }}/script/postgresql-delete;
+		{{directory}}/YCSB/bin/ycsb run jdbc -P {{directory}}/config/postgresql.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-continuous -s -target 20 -p eventFile={{directory}}/config/postgresql/postgresql-event-{{ node.host.name }}.xml > {{directory}}/results/postgresql/continuous-{{ node.host.name }}-$run.dat;
+		sleep 50s;
+		{{ directory }}/script/postgresql-remote-recover {{ loop.index0}} {{ node.host.name }};
+	done;
+{% endfor %}
 {% endif %}

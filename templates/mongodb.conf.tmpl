@@ -1,5 +1,10 @@
 {% if mongodb.accessServers is defined %}
-mongodb.url = mongodb://{{mongodb.accessServers[0].server.host.ip}}:{{mongodb.accessServers[0].port}}
+mongodb.url = {%for node in mongodb.accessServers -%}
+				mongodb://{{node.server.host.ip}}:{{node.port}}
+				{%- if not loop.last -%} 
+                        {{ ','}} 
+                    {%- endif -%}
+            {%- endfor %}
 mongodb.database = {{table}}
 mongodb.writeConcern = safe
 mongodb.maxconnections = 100

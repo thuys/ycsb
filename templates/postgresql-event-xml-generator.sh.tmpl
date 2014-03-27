@@ -12,5 +12,15 @@ rm -r -f {{ directory }}/config/postgresql/*
 			{{ directory }}/script/postgresql-remote-recover {{ loop.index0}} {{ node.host.name }}
 		</event>
 	</events>" > {{ directory }}/config/postgresql/postgresql-event-{{ node.host.name }}.xml
+	
+	echo "<?xml version=\"1.0\"?>
+	<events>
+		<event id=\"Down\" startInMS=\"300000\">
+			{{ directory }}/script/postgresql-remote-hard postgresql stop {{ node.host.name }}
+		</event>
+		<event id=\"Up\" startInMS=\"600000\">
+			{{ directory }}/script/postgresql-remote-recover {{ loop.index0}} {{ node.host.name }}
+		</event>
+	</events>" > {{ directory }}/config/postgresql/postgresql-event-{{ node.host.name }}-kill.xml
 {% endfor %}
 {% endif %}

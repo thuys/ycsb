@@ -16,6 +16,15 @@ for host in {%for region in hbase.regions -%}
 		<event id=\"Up\" startInMS=\"600000\">
 			{{ directory }}/script/hbase-remote-soft regionserver restart $host
 		</event>
-	</events>" > {{ directory }}/config/hbase/hbase-event-$host.xml
+	</events>" > {{ directory }}/config/hbase/hbase-event-$host.xml;
+	echo "<?xml version=\"1.0\"?>
+	<events>
+		<event id=\"Down\" startInMS=\"300000\">
+			{{ directory }}/script/hbase-remote-soft regionserver KILL stop $host
+		</event>
+		<event id=\"Up\" startInMS=\"600000\">
+			{{ directory }}/script/hbase-remote-soft regionserver restart $host
+		</event>
+	</events>" > {{ directory }}/config/hbase/hbase-event-$host-kill.xml
 done
 {% endif %}

@@ -11,7 +11,7 @@ touch {{ directory }}/results/mongodb/timings.out
 echo "Start $(date)" >>  {{ directory }}/results/mongodb/timings.out        
 {{ directory }}/script/mongodb-delete
 
-{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	
+{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{ directory }}/results/mongodb/load-unlimited.dat	
 sleep 20s
 {{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 100  > {{ directory }}/results/mongodb/unlimited.dat	
 sleep 20s
@@ -21,7 +21,7 @@ for t in 100 300 500 700 900 1000 1250 1500 1750 2000 2500 3000 3500 4000 5000 6
 	echo "Hockey $t $i $(date)" >>  {{ directory }}/results/mongodb/timings.out        
 	{{ directory }}/script/mongodb-delete
 	
-	{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	
+	{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{ directory }}/results/mongodb/load-threads-$t-$i.dat
 	sleep 50s
 	{{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 100 -target $t  > {{ directory }}/results/mongodb/threads-$t-$i.dat
 
@@ -49,9 +49,37 @@ for host in {%for set in mongodb.replicaSets -%}
 		
 		{{ directory }}/script/mongodb-delete
 		
-		{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	
+		{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{directory}}/results/mongodb/load-continuous-$host-$run.dat
 		sleep 50s
 		{{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-continuous -s -target 200 -p eventFile={{directory}}/config/mongodb/mongodb-event-$host.xml > {{directory}}/results/mongodb/continuous-$host-$run.dat
+		sleep 100s
+	done
+done
+
+sleep 100s
+for host in {%for set in mongodb.replicaSets -%}
+				{%for node in set.nodes -%}
+	                {{ node.server.host.name }}
+	                    {%- if not loop.last -%} 
+	                        {{ ' '}} 
+	                    {%- endif -%}
+                 {%- endfor %}  {{ ' '}}
+            {%- endfor %} {%for node in mongodb.singleNodes -%}
+	                {{ node.server.host.name }}
+	                    {%- if not loop.last -%} 
+	                        {{ ' '}} 
+	                    {%- endif -%}
+                 {%- endfor %}; do 
+            
+ 	#mongodb - Continuous run: 900s!
+	for run in 1 2 ;do
+		echo "Continiuum $host $run $(date)" >>  {{ directory }}/results/mongodb/timings.out        
+		
+		{{ directory }}/script/mongodb-delete
+		
+		{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{directory}}/results/mongodb/load-continuous-$host-kill-$run.dat
+		sleep 50s
+		{{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-continuous -s -target 200 -p eventFile={{directory}}/config/mongodb/mongodb-event-$host-kill.xml > {{directory}}/results/mongodb/continuous-$host-kill-$run.dat
 		sleep 100s
 	done
 done

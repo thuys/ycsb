@@ -2,8 +2,6 @@
 {% if mongodbConsistency is defined %}
 {% if mongodbConsistency.nodes is defined %}
 
-{{directory}}/script/mongodb-event-generator
-
 mkdir -p {{ directory }}/results/mongodb-consistency
 rm -f -r {{ directory }}/results/mongodb-consistency/*  
 

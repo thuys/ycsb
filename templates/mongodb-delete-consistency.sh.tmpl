@@ -1,8 +1,8 @@
 #!/bin/bash
-{% if mongodbConsistency.nodes is defined %}
+{% if mongodb-consistency.nodes is defined %}
 mkdir -p /tmp/mongodbsharded/
 echo "use {{table}}-consistency" > /tmp/mongodbsharded/table.delete.in
 echo "db.usertable.remove()" >> /tmp/mongodbsharded/table.delete.in
 
-cat /tmp/mongodbsharded/table.delete.in | mongo --host {{mongodbConsistency.nodes[0].server.host.ip}}:{{mongodbConsistency.nodes[0].port}}
+cat /tmp/mongodbsharded/table.delete.in | mongo --host {{mongodb-consistency.nodes[0].server.host.ip}}:{{mongodb-consistency.nodes[0].port}}
 {% endif %}

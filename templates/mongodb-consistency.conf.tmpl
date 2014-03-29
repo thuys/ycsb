@@ -1,5 +1,5 @@
-{% if mongodbConsistency.nodes is defined %}
-mongodb.url = {%for node in mongodbConsistency.nodes -%}
+{% if mongodb-consistency.nodes is defined %}
+mongodb.url = {%for node in mongodb-consistency.nodes -%}
 	                {{ node.server.host.name }}
 	                    {%- if not loop.last -%} 
 	                        {{ ' '}} 

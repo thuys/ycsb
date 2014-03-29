@@ -5,6 +5,7 @@ entity YCSB extends ip::services::Server:
 end
 
 YCSB ycsb [0:] -- [0:1] mongodb::MongoDBShardCluster mongodb
+YCSB ycsb [0:] -- [0:1] mongodb::MongoDBReplicaSet mongodb-consistency
 YCSB ycsb [0:] -- [0:1] postgresql::PgpoolMain postgresql
 YCSB ycsb [0:] -- [0:1] hbase::HBaseCluster hbase
 
@@ -86,6 +87,18 @@ implementation ycsb-mongodb:
     benchScript= std::File(host = host, path = "{{directory}}/script/mongodb-script", content = template("ycsb/mongodb-script.sh.tmpl"), reload = true,
     			owner = "root", group = "root", mode = 755)
     benchScript.requires = eventGenerator
+    
+    ##Consistency
+    configFileConsistency= std::ConfigFile(host = host, path = "{{directory}}/config/mongodb-consistency.conf", content = template("ycsb/mongodb-consistency.conf.tmpl"), reload = true)
+    configFileConsistency.requires = std::Directory[host = host, path = "{{directory}}/config"]
+    
+    deleteFileConsistency= std::File(host = host, path = "{{directory}}/script/mongodb-delete-consistency", content = template("ycsb/mongodb-delete-consistency.sh.tmpl"), reload = true,
+    			owner = "root", group = "root", mode = 755)
+    deleteFileConsistency.requires = std::Directory[host = host, path = "{{directory}}/script"]
+    
+    benchScriptConsistency= std::File(host = host, path = "{{directory}}/script/mongodb-script-consistency", content = template("ycsb/mongodb-script-consistency.sh.tmpl"), reload = true,
+    			owner = "root", group = "root", mode = 755)
+    benchScriptConsistency.requires = std::Directory[host = host, path = "{{directory}}/script"]
 end
 
 implementation ycsb-postgresql:

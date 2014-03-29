@@ -1,0 +1,39 @@
+#!/bin/bash
+{% if mongodbConsistency.nodes is defined %}
+
+{{directory}}/script/mongodb-event-generator
+
+mkdir -p {{ directory }}/results/mongodb-consistency
+rm -f -r {{ directory }}/results/mongodb-consistency/*  
+
+touch {{ directory }}/results/mongodb-consistency/timings.out
+
+echo "Start $(date)" >>  {{ directory }}/results/mongodb/timings.out        
+{{ directory }}/script/mongodb-delete
+
+{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb-consistency.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{ directory }}/results/mongodb-consistency/load-unlimited.dat	
+sleep 20s
+{{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb-consistency.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 100  > {{ directory }}/results/mongodb-consistency/unlimited.dat	
+sleep 20s
+
+for writeStyle in none safe normal fsync_safe replicas_safe majority; do 
+    for readStyle in nearest primary primarypreferred secondar secondarypreferred ; do       
+	for run in 1 2 ;do
+		echo "Continiuum $host $run $(date)" >>  {{ directory }}/results/mongodb/timings.out        
+		
+		{{ directory }}/script/mongodb-delete
+		
+		{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb-consistency.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{directory}}/results/mongodb-consistency/load-continuous-$writeStyle-$readStyle-$run.dat
+		sleep 50s
+echo "insertMatrixDelayExportFile={{directory}}/results/mongodb/insertDelay-$writeStyle-$readStyle-$run.dat
+updateMatrixDelayExportFile={{directory}}/results/mongodb/updateDelay-$writeStyle-$readStyle-$run.dat
+insertMatrixNbOfChangesExportFile={{directory}}/results/mongodb/insertChanges-$writeStyle-$readStyle-$run.dat
+updateMatrixNbOfChangesExportFile={{directory}}/results/mongodb/updateChanges-$writeStyle-$readStyle-$run.dat
+insertMatrixRawExportFile={{directory}}/results/mongodb/insertRawData-$writeStyle-$readStyle-$run.dat
+updateMatrixRawExportFile={{directory}}/results/mongodb/updateRawData-$writeStyle-$readStyle-$run.dat" > {{directory}}/config/mongodb-consistency-tmp.conf
+		{{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb-consistency.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-consistency -P {{directory}}/config/mongodb-consistency-tmp.conf -s -target 200  > {{directory}}/results/mongodb/continuous-$writeStyle-$readStyle-$run.dat
+		sleep 100s
+	done
+done
+
+{% endif %}

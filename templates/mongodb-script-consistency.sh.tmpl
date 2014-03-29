@@ -24,12 +24,12 @@ for writeStyle in none safe normal fsync_safe replicas_safe majority; do
 		
 		{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb-consistency.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{directory}}/results/mongodb-consistency/load-continuous-$writeStyle-$readStyle-$run.dat
 		sleep 50s
-echo "insertMatrixDelayExportFile={{directory}}/results/mongodb/insertDelay-$writeStyle-$readStyle-$run.dat
-updateMatrixDelayExportFile={{directory}}/results/mongodb/updateDelay-$writeStyle-$readStyle-$run.dat
-insertMatrixNbOfChangesExportFile={{directory}}/results/mongodb/insertChanges-$writeStyle-$readStyle-$run.dat
-updateMatrixNbOfChangesExportFile={{directory}}/results/mongodb/updateChanges-$writeStyle-$readStyle-$run.dat
-insertMatrixRawExportFile={{directory}}/results/mongodb/insertRawData-$writeStyle-$readStyle-$run.dat
-updateMatrixRawExportFile={{directory}}/results/mongodb/updateRawData-$writeStyle-$readStyle-$run.dat" > {{directory}}/config/mongodb-consistency-tmp.conf
+echo "insertMatrixDelayExportFile={{directory}}/results/mongodb-consistency/insertDelay-$writeStyle-$readStyle-$run.dat
+updateMatrixDelayExportFile={{directory}}/results/mongodb-consistency/updateDelay-$writeStyle-$readStyle-$run.dat
+insertMatrixNbOfChangesExportFile={{directory}}/results/mongodb-consistency/insertChanges-$writeStyle-$readStyle-$run.dat
+updateMatrixNbOfChangesExportFile={{directory}}/results/mongodb-consistency/updateChanges-$writeStyle-$readStyle-$run.dat
+insertMatrixRawExportFile={{directory}}/results/mongodb-consistency/insertRawData-$writeStyle-$readStyle-$run.dat
+updateMatrixRawExportFile={{directory}}/results/mongodb-consistency/updateRawData-$writeStyle-$readStyle-$run.dat" > {{directory}}/config/mongodb-consistency-tmp.conf
 		{{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb-consistency.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-consistency -P {{directory}}/config/mongodb-consistency-tmp.conf -s -target 200  > {{directory}}/results/mongodb/continuous-$writeStyle-$readStyle-$run.dat
 		sleep 100s
 	done

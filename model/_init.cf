@@ -45,8 +45,12 @@ implementation ycsb:
     workloadFileStress.requires = configdir
     
     workloadConsistency = std::File(host = host, path = "{{directory}}/config/workload-ycsb-thomas-consistency",owner = "root",
-        group = "root", mode = 755,  content = template("ycsb/workload-ycsb-thomas-consistency.tmpl"), reload = true)
+        group = "root", mode = 755,  content = file("ycsb/workload-ycsb-thomas-consistency"), reload = true)
     workloadConsistency.requires = configdir
+    
+    workloadConsistencyRun = std::File(host = host, path = "{{directory}}/config/workload-ycsb-thomas-consistency-run",owner = "root",
+        group = "root", mode = 755,  content = template("ycsb/workload-ycsb-thomas-consistency-run.tmpl"), reload = true)
+    workloadConsistencyRun.requires = configdir
     
     workloadLoad = std::File(host = host, path = "{{directory}}/config/workload-ycsb-thomas-load",owner = "root",
         group = "root", mode = 755,  content = file("ycsb/workload-ycsb-thomas-load"), reload = true)

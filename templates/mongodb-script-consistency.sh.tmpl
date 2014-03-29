@@ -1,5 +1,6 @@
 #!/bin/bash
-{% if mongodb-consistency.nodes is defined %}
+{% if mongodbConsistency is defined %}
+{% if mongodbConsistency.nodes is defined %}
 
 {{directory}}/script/mongodb-event-generator
 
@@ -36,4 +37,5 @@ updateMatrixRawExportFile={{directory}}/results/mongodb/updateRawData-$writeStyl
 	done
 done
 
+{% endif %}
 {% endif %}

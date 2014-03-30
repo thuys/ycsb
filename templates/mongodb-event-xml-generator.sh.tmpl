@@ -27,7 +27,7 @@ for host in {%for set in mongodb.replicaSets -%}
 	echo "<?xml version=\"1.0\"?>
 	<events>
 		<event id=\"Down\" startInMS=\"300000\">
-			{{ directory }}/script/mongodb-remote-hard mongod KILL $host
+			{{ directory }}/script/mongodb-remote-hard-stop mongodb KILL $host
 		</event>
 		<event id=\"Up\" startInMS=\"600000\">
 			{{ directory }}/script/mongodb-remote-soft mongod restart $host

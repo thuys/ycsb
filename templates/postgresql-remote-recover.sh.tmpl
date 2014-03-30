@@ -3,4 +3,4 @@
 # $2: where
 
 {{ directory }}/script/postgresql-remote-soft postgresql restart $2
-echo "/usr/local/bin/pcp_recovery_node 10 localhost 9898 thesis thesis  $1" | ssh {{postgresql.host.name}}
+echo "/usr/local/bin/pcp_recovery_node -d 10 localhost 9898 thesis thesis  $1" | ssh {{postgresql.host.name}}

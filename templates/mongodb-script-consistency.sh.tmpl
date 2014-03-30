@@ -18,7 +18,7 @@ echo "Start $(date)" >>  {{ directory }}/results/mongodb-consistency/timings.out
 for writeStyle in none safe normal fsync_safe replicas_safe majority; do 
     for readStyle in nearest primary primarypreferred secondar secondarypreferred ; do       
 		for run in 1 2 ;do
-			echo "Continiuum $host $run $(date)" >>  {{ directory }}/results/mongodb-consistency/timings.out        
+			echo "Continiuum $writeStyle $readStyle $run $(date)" >>  {{ directory }}/results/mongodb-consistency/timings.out        
 			
 			{{ directory }}/script/mongodb-delete-consistency
 			

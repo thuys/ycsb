@@ -1,0 +1,36 @@
+#!/bin/bash
+{% if hbase.hdfs is defined %}}
+
+mkdir -p {{ directory }}/results/hbase-consistency
+rm -f -r {{ directory }}/results/hbase-consistency/*  
+
+touch {{ directory }}/results/hbase-consistency/timings.out
+
+echo "Start $(date)" >>  {{ directory }}/results/hbase-consistency/timings.out        
+{{ directory }}/script/hbase-delete
+
+#{{directory}}/YCSB/bin/ycsb load hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{ directory }}/results/hbase-consistency/load-unlimited.dat	
+#sleep 20s
+#{{directory}}/YCSB/bin/ycsb run hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 100  > {{ directory }}/results/hbase-consistency/unlimited.dat	
+#sleep 20s
+
+     
+for run in 1 2 ;do
+	echo "Continiuum $run $(date)" >>  {{ directory }}/results/hbase-consistency/timings.out        
+	
+	{{ directory }}/script/hbase-delete
+	
+	{{directory}}/YCSB/bin/ycsb load hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas-consistency -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{directory}}/results/hbase-consistency/load-continuous-$writeStyle-$readStyle-$run.dat
+	sleep 20s
+echo "insertMatrixDelayExportFile={{directory}}/results/hbase-consistency/insertDelay-$run.dat
+updateMatrixDelayExportFile={{directory}}/results/hbase-consistency/updateDelay-$run.dat
+insertMatrixNbOfChangesExportFile={{directory}}/results/hbase-consistency/insertChanges-$run.dat
+updateMatrixNbOfChangesExportFile={{directory}}/results/hbase-consistency/updateChanges-$run.dat
+insertMatrixRawExportFile={{directory}}/results/hbase-consistency/insertRawData-$run.dat
+updateMatrixRawExportFile={{directory}}/results/hbase-consistency/updateRawData-$run.dat" > {{directory}}/config/hbase-consistency-tmp.conf
+{{directory}}/YCSB/bin/ycsb run hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas-consistency -P {{directory}}/config/workload-ycsb-thomas-consistency-run -P {{directory}}/config/hbase-consistency-tmp.conf -s -target 200  > {{directory}}/results/hbase-consistency/continuous--$run.dat
+	sleep 30s
+done
+
+
+{% endif %}

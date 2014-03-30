@@ -182,5 +182,8 @@ implementation ycsb-hbase:
     			owner = "root", group = "root", mode = 755)
     benchScript.requires = eventGenerator
     
+    consistencyScript= std::File(host = host, path = "{{directory}}/script/hbase-script-consistency", content = template("ycsb/hbase-script-consistency.sh.tmpl"), reload = true,
+    			owner = "root", group = "root", mode = 755)
+    consistencyScript.requires = std::Directory[host = host, path = "{{directory}}/script"]
     
 end

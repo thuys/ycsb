@@ -1,5 +1,5 @@
 #!/bin/bash
-{% if hbase.hdfs is defined %}}
+{% if hbase.hdfs is defined %}
 
 mkdir -p {{ directory }}/results/hbase-consistency
 rm -f -r {{ directory }}/results/hbase-consistency/*  

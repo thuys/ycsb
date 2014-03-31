@@ -53,7 +53,7 @@ sleep 100s
            
  	#postgresql - Continuous run: 900s!
 	for run in 1 2 ;do
-		echo "Continiuum {{node.host.name}} $run $(date)" >>  {{ directory }}/results/postgresql/timings.out        
+		echo "Continiuum {{node.host.name}} KILL $run $(date)" >>  {{ directory }}/results/postgresql/timings.out        
 	
 		{{ directory }}/script/postgresql-delete;
 		

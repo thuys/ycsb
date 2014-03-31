@@ -73,7 +73,7 @@ for host in {%for set in mongodb.replicaSets -%}
             
  	#mongodb - Continuous run: 900s!
 	for run in 1 2 ;do
-		echo "Continiuum $host $run $(date)" >>  {{ directory }}/results/mongodb/timings.out        
+		echo "Continiuum $host KILL $run $(date)" >>  {{ directory }}/results/mongodb/timings.out        
 		
 		{{ directory }}/script/mongodb-delete
 		

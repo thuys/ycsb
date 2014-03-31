@@ -5,10 +5,10 @@ mkdir -p /tmp/mongodbsharded/
 echo "var master = db.isMaster();
 if (master.ismaster == false)
 {
-  db = connect(master.primary + '/');
+  db = connect(master.primary + '/' + db);
 }
-use {{table}}-consistency
-db.dropDatabase()" > /tmp/mongodbsharded/table.delete.in
+use {{table}}-consistency;
+db.dropDatabase();" > /tmp/mongodbsharded/table.delete.in
 
 cat /tmp/mongodbsharded/table.delete.in | mongo --host {{mongodbConsistency.nodes[0].server.host.ip}}:{{mongodbConsistency.nodes[0].port}}
 {% endif %}

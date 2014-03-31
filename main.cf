@@ -53,7 +53,7 @@ mongo4Server = mongodb::MongoDBServer(host=vmMDB4)
 mongo5Server = mongodb::MongoDBServer(host=vmMDB5)
 
 
-mongoN1 = mongodb::MongoDBNode(host=mongo1, server=mongo1Server, datadir = "/mnt/vdb/mongod" )
+mongoN1 = mongodb::MongoDBNode(host=mongo1, server=mongo1Server, datadir = "/mnt/mongod" )
 mongoN2 = mongodb::MongoDBNode(host=mongo2, server=mongo2Server, datadir = "/mnt/mongod")
 mongoN3 = mongodb::MongoDBNode(host=mongo3, server=mongo3Server, datadir = "/mnt/mongod")
 mongoN4 = mongodb::MongoDBNode(host=mongo4, server=mongo4Server, datadir = "/mnt/mongod")

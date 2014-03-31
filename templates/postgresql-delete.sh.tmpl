@@ -5,5 +5,7 @@ echo "truncate usertable;" > /tmp/postgresqlshared/table.delete.in
 cat /tmp/postgresqlshared/table.delete.in | psql -h {{postgresql.host.name}} -p {{postgresql.port}} -d {{table}}
 
 dropdb -U postgres -h {{ postgresql.host.name }} -p {{postgresql.port}} {{table}}
+createdb -U postgres -h {{ postgresql.host.name }} -p {{postgresql.port}} {{table}}
+
 psql -d {{table}} -U postgres -h {{ postgresql.host.name }} -p {{postgresql.port}} -f {{directory}}/YCSB/jdbc/src/main/resources/sql/create_table.sql
 

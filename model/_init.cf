@@ -75,7 +75,7 @@ implementation ycsb-mongodb:
     			owner = "root", group = "root", mode = 755)
     deleteFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
     
-    hardFile= std::File(host = host, path = "{{directory}}/script/mongodb-remote-hard-stop", content = file("ycsb/mongodb-remote-hard-stop.sh"), reload = true,
+    hardFile= std::File(host = host, path = "{{directory}}/script/mongodb-remote-hard-stop", content = template("ycsb/mongodb-remote-hard-stop.sh"), reload = true,
     			owner = "root", group = "root", mode = 755)
     hardFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
     

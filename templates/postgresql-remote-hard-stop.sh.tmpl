@@ -1,0 +1,5 @@
+#!/bin/bash
+# $1: which service 
+# $2: What? (KILL/...)
+# $3: where
+echo "kill -s $2 \$(cat {{postgresql.pgpoolNodes[0].datadir}}/postmaster.pid)" | ssh $3

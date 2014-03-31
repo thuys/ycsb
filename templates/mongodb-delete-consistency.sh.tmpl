@@ -4,6 +4,7 @@
 mkdir -p /tmp/mongodbsharded/
 echo "use {{table}}-consistency" > /tmp/mongodbsharded/table.delete.in
 echo "db.usertable.remove()" >> /tmp/mongodbsharded/table.delete.in
+echo "db.repairDatabase()" >> /tmp/mongodbsharded/table.delete.in
 
 cat /tmp/mongodbsharded/table.delete.in | mongo --host {{mongodbConsistency.nodes[0].server.host.ip}}:{{mongodbConsistency.nodes[0].port}}
 {% endif %}

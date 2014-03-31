@@ -1,6 +1,6 @@
 entity YCSB extends ip::services::Server:
     """The general YCSB, single"""
-    string directory = "/home/ec2-user/ycsb"
+    string directory = "/root/ycsb"
     string table = "usertable"
 end
 

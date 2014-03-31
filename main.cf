@@ -53,11 +53,11 @@ mongo4Server = mongodb::MongoDBServer(host=vmMDB4)
 mongo5Server = mongodb::MongoDBServer(host=vmMDB5)
 
 
-mongoN1 = mongodb::MongoDBNode(host=mongo1, server=mongo1Server, datadir = "/dev/vdc/mongod")
-mongoN2 = mongodb::MongoDBNode(host=mongo2, server=mongo2Server, datadir = "/dev/vdc/mongod")
-mongoN3 = mongodb::MongoDBNode(host=mongo3, server=mongo3Server, datadir = "/dev/vdc/mongod")
-mongoN4 = mongodb::MongoDBNode(host=mongo4, server=mongo4Server, datadir = "/dev/vdc/mongod")
-mongoN5 = mongodb::MongoDBNode(host=mongo5, server=mongo5Server, datadir = "/dev/vdc/mongod")
+mongoN1 = mongodb::MongoDBNode(host=mongo1, server=mongo1Server)
+mongoN2 = mongodb::MongoDBNode(host=mongo2, server=mongo2Server)
+mongoN3 = mongodb::MongoDBNode(host=mongo3, server=mongo3Server)
+mongoN4 = mongodb::MongoDBNode(host=mongo4, server=mongo4Server)
+mongoN5 = mongodb::MongoDBNode(host=mongo5, server=mongo5Server)
 
 
 set1 = mongodb::MongoDBReplicaSet(name="repl1", nodes = [mongoN1, mongoN2, mongoN3])

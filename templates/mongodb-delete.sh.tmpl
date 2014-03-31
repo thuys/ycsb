@@ -7,5 +7,5 @@ echo "db.dropDatabase()" >> /tmp/mongodbsharded/table.delete.in
  
 cat /tmp/mongodbsharded/table.delete.in | mongo --host {{mongodb.accessServers[0].server.host.ip}}:{{mongodb.accessServers[0].port}}
 
-echo "/usr/bin/mongodb-shardeddatabases && /usr/bin/mongodb-shardedcollections" | ssh {{mongodb.shardController.server.host.ip}}
+echo "/usr/bin/mongodb-shardeddatabases && /usr/bin/mongodb-shardedcollections" | ssh {{mongodb.shardController.host.host.name}}
 {% endif %}

@@ -5,7 +5,7 @@ echo "use {{table}}" > /tmp/mongodbsharded/table.delete.in
 echo "db.usertable.remove()" >> /tmp/mongodbsharded/table.delete.in
 echo "db.dropDatabase()" >> /tmp/mongodbsharded/table.delete.in
  
-cat /tmp/mongodbsharded/table.delete.in | mongo --host {{mongodb.accessServers[0].server.host.ip}}:{{mongodb.accessServers[0].port}}
+cat /tmp/mongodbsharded/table.delete.in | mongo --host {{mongodb.shardController.accessServer.server.host.ip}}:{{mongodb.shardController.accessServer.port}}
 
 echo "/usr/bin/mongodb-shardeddatabases && /usr/bin/mongodb-shardedcollections" | ssh {{mongodb.shardController.host.host.name}}
 {% endif %}

@@ -53,11 +53,11 @@ mongo4Server = mongodb::MongoDBServer(host=vmMDB4)
 mongo5Server = mongodb::MongoDBServer(host=vmMDB5)
 
 
-mongoN1 = mongodb::MongoDBNode(host=mongo1, server=mongo1Server)
-mongoN2 = mongodb::MongoDBNode(host=mongo2, server=mongo2Server)
-mongoN3 = mongodb::MongoDBNode(host=mongo3, server=mongo3Server)
-mongoN4 = mongodb::MongoDBNode(host=mongo4, server=mongo4Server)
-mongoN5 = mongodb::MongoDBNode(host=mongo5, server=mongo5Server)
+mongoN1 = mongodb::MongoDBNode(host=mongo1, server=mongo1Server, datadir = "/dev/vdb/mongod" )
+mongoN2 = mongodb::MongoDBNode(host=mongo2, server=mongo2Server, datadir = "/dev/vdb/mongod")
+mongoN3 = mongodb::MongoDBNode(host=mongo3, server=mongo3Server, datadir = "/dev/vdb/mongod")
+mongoN4 = mongodb::MongoDBNode(host=mongo4, server=mongo4Server, datadir = "/dev/vdb/mongod")
+mongoN5 = mongodb::MongoDBNode(host=mongo5, server=mongo5Server, datadir = "/dev/vdb/mongod")
 
 
 set1 = mongodb::MongoDBReplicaSet(name="repl1", nodes = [mongoN1, mongoN2, mongoN3])
@@ -89,8 +89,8 @@ keyYCSB2 = mongodb::MongoDBKey(name = "_id", valueString = "hashed", collection 
 
 ## POSTGRESQL 
 
-pgNode1 = postgresql::PgpoolNode(host = vmPG1)
-pgNode2 = postgresql::PgpoolNode(host = vmPG2)
+pgNode1 = postgresql::PgpoolNode(host = vmPG1, datadir = "/dev/vdb/pgsql")
+pgNode2 = postgresql::PgpoolNode(host = vmPG2, datadir = "/dev/vdb/pgsql")
 
 pgMaster = postgresql::PgpoolMain(host = vmPG3, pgpoolNodes = [pgNode1, pgNode2])
 

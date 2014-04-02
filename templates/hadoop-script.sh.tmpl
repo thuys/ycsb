@@ -27,7 +27,7 @@ for host in {%for datanode in hbase.hdfs.dataNodes -%}
             
  	#HBase - Continuous run: 900s!
 	for run in 1 2 ;do
-		echo "Continiuum $host $run $(date)" >>  {{ directory }}/results/hbase/timings.out        
+		echo "Continiuum $host $run $(date)" >>  {{ directory }}/results/hadoop/timings.out        
 	
 		{{ directory }}/script/hbase-delete
 		{{directory}}/YCSB/bin/ycsb load hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{directory}}/results/hadoop/load-continuous-$host-$run.dat

@@ -1,0 +1,30 @@
+#!/bin/bash
+{% if hbase.hdfs is defined %}
+mkdir -p {{ directory }}/config/hadoop
+rm -r -f {{ directory }}/config/hadoop/*
+for host in {%for datanode in hbase.hdfs.dataNodes -%}
+                {{ datanode.host.host.name }}
+                    {%- if not loop.last -%} 
+                        {{ ' '}} 
+                    {%- endif -%}
+            {%- endfor %}; do
+	echo "<?xml version=\"1.0\"?>
+	<events>
+		<event id=\"Down\" startInMS=\"300000\">
+			{{ directory }}/script/hadoop-remote-soft datanode stop $host
+		</event>
+		<event id=\"Up\" startInMS=\"600000\">
+			{{ directory }}/script/hadoop-remote-soft datanode restart $host
+		</event>
+	</events>" > {{ directory }}/config/hadoop/hadoop-event-$host.xml;
+	echo "<?xml version=\"1.0\"?>
+	<events>
+		<event id=\"Down\" startInMS=\"300000\">
+			{{ directory }}/script/hadoop-remote-hard-stop datanode KILL $host
+		</event>
+		<event id=\"Up\" startInMS=\"600000\">
+			{{ directory }}/script/hadoop-remote-soft datanode restart $host
+		</event>
+	</events>" > {{ directory }}/config/hadoop/hadoop-event-$host-kill.xml
+done
+{% endif %}

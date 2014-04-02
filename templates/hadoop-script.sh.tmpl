@@ -1,0 +1,59 @@
+#!/bin/bash
+{% if hbase.hdfs is defined %}
+
+{{directory}}/script/hadoop-event-generator
+
+mkdir -p {{ directory }}/results/hadoop
+rm -f -r {{ directory }}/results/hadoop/* 
+
+touch {{ directory }}/results/hadoop/timings.out
+ssh {{ hbase.masters[0].host.host.name }} 'echo "create \"{{table}}\", \"family\"" | hbase shell'
+
+
+echo "Start $(date)" >>  {{ directory }}/results/hadoop/timings.out        
+{{ directory }}/script/hbase-delete
+{{directory}}/YCSB/bin/ycsb load hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s > {{ directory }}/results/hbase/load-unlimited.dat	
+sleep 50s	
+{{directory}}/YCSB/bin/ycsb run hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 40  > {{ directory }}/results/hbase/unlimited.dat	
+sleep 20s
+
+sleep 100s
+for host in {%for datanode in hbase.hdfs.dataNodes -%}
+                {{ datanode.host.host.name }}
+                    {%- if not loop.last -%} 
+                        {{ ' '}} 
+                    {%- endif -%}
+            {%- endfor %}; do 
+            
+ 	#HBase - Continuous run: 900s!
+	for run in 1 2 ;do
+		echo "Continiuum $host $run $(date)" >>  {{ directory }}/results/hbase/timings.out        
+	
+		{{ directory }}/script/hbase-delete
+		{{directory}}/YCSB/bin/ycsb load hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{directory}}/results/hadoop/load-continuous-$host-$run.dat
+		sleep 50s
+		{{directory}}/YCSB/bin/ycsb run hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-continuous -s -target 200 -p eventFile={{directory}}/config/hadoop/hadoop-event-$host.xml > {{directory}}/results/hadoop/continuous-$host-$run.dat
+		sleep 100s
+	done
+done
+
+sleep 100s
+for host in {%for datanode in hbase.hdfs.dataNodes-%}
+                {{ datanode.host.host.name }}
+                    {%- if not loop.last -%} 
+                        {{ ' '}} 
+                    {%- endif -%}
+            {%- endfor %}; do 
+            
+ 	#HBase - Continuous run: 900s!
+	for run in 1 2 ;do
+		echo "Continiuum $host KILL $run $(date)" >>  {{ directory }}/results/hadoop/timings.out        
+	
+		{{ directory }}/script/hbase-delete
+		{{directory}}/YCSB/bin/ycsb load hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{directory}}/results/hadoop/load-continuous-$host-kill-$run.dat
+		sleep 50s
+		{{directory}}/YCSB/bin/ycsb run hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-continuous -s -target 200 -p eventFile={{directory}}/config/hadoop/hadoop-event-$host-kill.xml > {{directory}}/results/hadoop/continuous-$host-kill-$run.dat
+		sleep 100s
+	done
+done
+{% endif %}

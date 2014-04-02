@@ -182,8 +182,26 @@ implementation ycsb-hbase:
     			owner = "root", group = "root", mode = 755)
     benchScript.requires = eventGenerator
     
-    consistencyScript= std::File(host = host, path = "{{directory}}/script/hbase-script-consistency", content = template("ycsb/hbase-script-consistency.sh.tmpl"), reload = true,
+    consistencyScript= std::File(host = host, path = "{{directory}}/script/hadoop-script-consistency", content = template("ycsb/hadoop-script-consistency.sh.tmpl"), reload = true,
     			owner = "root", group = "root", mode = 755)
     consistencyScript.requires = std::Directory[host = host, path = "{{directory}}/script"]
+    
+    
+    hadoopHardFile= std::File(host = host, path = "{{directory}}/script/hadoop-remote-hard-stop", content = file("ycsb/hadoop-remote-hard-stop.sh"), reload = true,
+    			owner = "root", group = "root", mode = 755)
+    hadoopHardFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
+    
+    
+    hadoopSoftFile= std::File(host = host, path = "{{directory}}/script/hadoop-remote-soft", content = file("ycsb/hadoop-remote-soft.sh"), reload = true,
+    			owner = "root", group = "root", mode = 755)
+    hadoopSoftFile.requires = std::Directory[host = host, path = "{{directory}}/script"]
+    
+    hadoopEventGenerator= std::File(host = host, path = "{{directory}}/script/hadoop-event-generator", content = template("ycsb/hadoop-event-xml-generator.sh.tmpl"), reload = true,
+    			owner = "root", group = "root", mode = 755)
+    hadoopEventGenerator.requires = std::Directory[host = host, path = "{{directory}}/script"]
+
+	hadoopBenchScript= std::File(host = host, path = "{{directory}}/script/hadoop-script", content = template("ycsb/hadoop-script.sh.tmpl"), reload = true,
+    			owner = "root", group = "root", mode = 755)
+    hadoopBenchScript.requires = hadoopEventGenerator
     
 end

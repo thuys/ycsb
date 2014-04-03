@@ -14,9 +14,9 @@ vmPG1 = ip::Host(name = "vmpg1", os = "fedora-18", ip = "172.16.32.14")
 vmPG2 = ip::Host(name = "vmpg2", os = "fedora-18", ip = "172.16.32.15")
 vmPG3 = ip::Host(name = "vmpg3", os = "fedora-18", ip = "172.16.32.16")
 
-vmYCSB = ip::Host(name = "ycsb", os = "fedora-18", ip = "172.16.32.2")
+vmYCSB = ip::Host(name = "ycsb", os = "fedora-18", ip = "172.16.32.14")
 
-vmYCSB2 = ip::Host(name = "ycsb-2", os = "fedora-18", ip = "172.16.32.17")
+vmYCSB2 = ip::Host(name = "ycsb-2", os = "fedora-18", ip = "172.16.32.18")
 ## HBASE ##
 hbaseHost1 = hbase::HBaseBasic(host = vmHB1)
 hbaseHost2 = hbase::HBaseBasic(host = vmHB2)

@@ -87,6 +87,7 @@ databaseYCSB2 = mongodb::MongoDBDatabase(name="ycsb-2", shardCluster = mongoDBCl
 collectionYCSB2 = mongodb::MongoDBCollection(name="usertable", database = databaseYCSB2)
 keyYCSB2 = mongodb::MongoDBKey(name = "_id", valueString = "hashed", collection = collectionYCSB2)
 
+monitoringAgent = mongodb::MongoDBMonitoringAgent(key = "cac82dfebac6a861d6bd1cb147f06d57", host = mongo5)
 ## POSTGRESQL 
 
 pgNode1 = postgresql::PgpoolNode(host = vmPG1, datadir = "/mnt/pgsql")

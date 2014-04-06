@@ -60,8 +60,8 @@ implementation ycsb:
         group = "root", mode = 755,  content = template("ycsb/all-remote-network-start.sh.tmpl"), reload = true)
     dropScriptStart.requires = scriptDir
     
-    dropScriptStop = std::File(host = host, path = "{{directory}}/script/all-remote-network-start",owner = "root",
-        group = "root", mode = 755,  content = template("ycsb/all-remote-network-start.sh.tmpl"), reload = true)
+    dropScriptStop = std::File(host = host, path = "{{directory}}/script/all-remote-network-stop",owner = "root",
+        group = "root", mode = 755,  content = template("ycsb/all-remote-network-stop.sh.tmpl"), reload = true)
     dropScriptStop.requires = scriptDir
     
     service = std::Service(host = host, name = "ycsb-install", state = "running", onboot = false)

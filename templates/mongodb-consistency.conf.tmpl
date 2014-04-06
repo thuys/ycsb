@@ -2,6 +2,6 @@
 {% if mongodbConsistency.nodes is defined %}
 mongodb.url = mongodb://{{mongodbConsistency.nodes[0].server.host.ip}}:{{mongodbConsistency.nodes[0].port}}
 mongodb.database = {{table}}-consistency
-mongodb.maxconnections = 100
+mongodb.maxconnections = 3
 {% endif %}
 {% endif %}

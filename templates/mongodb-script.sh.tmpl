@@ -16,14 +16,26 @@ sleep 20s
 {{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 100  > {{ directory }}/results/mongodb/unlimited.dat	
 sleep 20s
 
+for t in 1 2 3 4 5 7 10 15 20 30 40 50 75 100; do
+	for i in 2;do
+	echo "Threads $t $i $(date)" >>  {{ directory }}/results/mongodb/timings.out        
+	{{ directory }}/script/mongodb-delete
+	
+	{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{ directory }}/results/mongodb/load-threads-$t-$i.dat
+	sleep 50s
+	{{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads $t  > {{ directory }}/results/mongodb/threads-$t-$i.dat
+
+	done
+done  
+
 for t in 100 300 500 700 900 1000 1250 1500 1750 2000 2500 3000 3500 4000 5000 6000; do
 	for i in 2;do
 	echo "Hockey $t $i $(date)" >>  {{ directory }}/results/mongodb/timings.out        
 	{{ directory }}/script/mongodb-delete
 	
-	{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{ directory }}/results/mongodb/load-threads-$t-$i.dat
+	{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{ directory }}/results/mongodb/load-target-$t-$i.dat
 	sleep 50s
-	{{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 100 -target $t  > {{ directory }}/results/mongodb/threads-$t-$i.dat
+	{{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 100 -target $t  > {{ directory }}/results/mongodb/target-$t-$i.dat
 
 	done
 done     

@@ -7,5 +7,5 @@ mongodb.url = {%for node in mongodb.accessServers -%}
             {%- endfor %}
 mongodb.database = {{table}}
 mongodb.writeConcern = safe
-mongodb.maxconnections = 100
+mongodb.maxconnections = 1
 {% endif %}

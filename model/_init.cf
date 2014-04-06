@@ -56,6 +56,14 @@ implementation ycsb:
         group = "root", mode = 755,  content = file("ycsb/workload-ycsb-thomas-load"), reload = true)
     workloadLoad.requires = configdir
     
+    dropScriptStart = std::File(host = host, path = "{{directory}}/script/all-remote-network-start",owner = "root",
+        group = "root", mode = 755,  content = template("ycsb/all-remote-network-start.sh.tmpl"), reload = true)
+    dropScriptStart.requires = scriptDir
+    
+    dropScriptStop = std::File(host = host, path = "{{directory}}/script/all-remote-network-start",owner = "root",
+        group = "root", mode = 755,  content = template("ycsb/all-remote-network-start.sh.tmpl"), reload = true)
+    dropScriptStop.requires = scriptDir
+    
     service = std::Service(host = host, name = "ycsb-install", state = "running", onboot = false)
     service.requires = [git, maven, basedir, scriptFile, serviceFile]    
     

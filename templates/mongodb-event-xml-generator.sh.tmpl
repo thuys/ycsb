@@ -15,6 +15,7 @@ for host in {%for set in mongodb.replicaSets -%}
 	                        {{ ' '}} 
 	                    {%- endif -%}
                  {%- endfor %}; do
+                 
 	echo "<?xml version=\"1.0\"?>
 	<events>
 		<event id=\"Down\" startInMS=\"300000\">
@@ -24,6 +25,7 @@ for host in {%for set in mongodb.replicaSets -%}
 			{{ directory }}/script/mongodb-remote-soft mongod restart $host
 		</event>
 	</events>" > {{ directory }}/config/mongodb/mongodb-event-$host.xml;
+	
 	echo "<?xml version=\"1.0\"?>
 	<events>
 		<event id=\"Down\" startInMS=\"300000\">
@@ -33,5 +35,16 @@ for host in {%for set in mongodb.replicaSets -%}
 			{{ directory }}/script/mongodb-remote-soft mongod restart $host
 		</event>
 	</events>" > {{ directory }}/config/mongodb/mongodb-event-$host-kill.xml;
+	
+	echo "<?xml version=\"1.0\"?>
+	<events>
+		<event id=\"Down\" startInMS=\"300000\">
+			{{ directory }}/script/all-remote-network-stop $host
+		</event>
+		<event id=\"Up\" startInMS=\"600000\">
+			{{ directory }}/script/all-remote-network-start $host
+		</event>
+	</events>" > {{ directory }}/config/mongodb/mongodb-event-$host-drop.xml;
+	
 done
 {% endif %}

@@ -93,8 +93,8 @@ keyYCSB2 = mongodb::MongoDBKey(name = "_id", valueString = "hashed", collection 
 monitoringAgent = mongodb::MongoDBMonitoringAgent(key = "cac82dfebac6a861d6bd1cb147f06d57", host = vmMDB4)
 ## POSTGRESQL 
 
-pgNode1 = postgresql::PgpoolNode(host = vmPG1, datadir = "/mnt/pgsql")
-pgNode2 = postgresql::PgpoolNode(host = vmPG2, datadir = "/mnt/pgsql")
+pgNode1 = postgresql::PgpoolNode(host = vmPG1, datadir = "/mnt-2/pgsql")
+pgNode2 = postgresql::PgpoolNode(host = vmPG2, datadir = "/mnt-2/pgsql")
 
 pgMaster = postgresql::PgpoolMain(host = vmPG3, pgpoolNodes = [pgNode1, pgNode2])
 

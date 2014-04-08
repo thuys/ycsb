@@ -2,12 +2,12 @@ entity YCSB extends ip::services::Server:
     """The general YCSB, single"""
     string directory = "/root/ycsb"
     string table = "usertable"
-    boolean threads = true
-    boolean max-load = true
-    boolean availability-stop = true
-    boolean availability-kill = true
-    boolean availability-drop = true
-	boolean consistency = true    
+    bool threads = true
+    bool max-load = true
+    bool availability-stop = true
+    bool availability-kill = true
+    bool availability-drop = true
+	bool consistency = true    
 end
 
 YCSB ycsb [0:] -- [0:1] mongodb::MongoDBShardCluster mongodb

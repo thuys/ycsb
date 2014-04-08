@@ -3,10 +3,10 @@ entity YCSB extends ip::services::Server:
     string directory = "/root/ycsb"
     string table = "usertable"
     bool threads = true
-    bool max-load = true
-    bool availability-stop = true
-    bool availability-kill = true
-    bool availability-drop = true
+    bool maxLoad = true
+    bool availabilityStop = true
+    bool availabilityKill = true
+    bool availabilityDrop = true
 	bool consistency = true    
 end
 

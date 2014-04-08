@@ -17,6 +17,7 @@ sleep 50s
 {{directory}}/YCSB/bin/ycsb run hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 40  > {{ directory }}/results/hbase/unlimited.dat	
 sleep 20s
 
+{% if availabilityStop %}
 sleep 100s
 for host in {%for datanode in hbase.hdfs.dataNodes -%}
                 {{ datanode.host.host.name }}
@@ -36,7 +37,9 @@ for host in {%for datanode in hbase.hdfs.dataNodes -%}
 		sleep 100s
 	done
 done
+{%endif %}
 
+{% if availabilityKill %}
 sleep 100s
 for host in {%for datanode in hbase.hdfs.dataNodes-%}
                 {{ datanode.host.host.name }}
@@ -56,4 +59,5 @@ for host in {%for datanode in hbase.hdfs.dataNodes-%}
 		sleep 100s
 	done
 done
+{% endif %}
 {% endif %}

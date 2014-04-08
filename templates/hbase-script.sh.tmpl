@@ -88,4 +88,26 @@ for host in {%for region in hbase.regions -%}
 	done
 done
 {% endif %}
+
+{% if availabilityDrop %}
+sleep 100s
+for host in {%for region in hbase.regions -%}
+                {{ region.host.host.name }}
+                    {%- if not loop.last -%} 
+                        {{ ' '}} 
+                    {%- endif -%}
+            {%- endfor %}; do 
+            
+ 	#HBase - Continuous run: 900s!
+	for run in 1 2 ;do
+		echo "Continiuum $host KILL $run $(date)" >>  {{ directory }}/results/hbase/timings.out        
+	
+		{{ directory }}/script/hbase-delete
+		{{directory}}/YCSB/bin/ycsb load hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{directory}}/results/hbase/load-continuous-$host-drop-$run.dat
+		sleep 50s
+		{{directory}}/YCSB/bin/ycsb run hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-continuous -s -target 200 -p eventFile={{directory}}/config/hbase/hbase-event-$host-drop.xml > {{directory}}/results/hbase/continuous-$host-drop-$run.dat
+		sleep 100s
+	done
+done
+{% endif %}
 {% endif %}

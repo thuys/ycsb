@@ -14,8 +14,9 @@ echo "Start $(date)" >>  {{ directory }}/results/mongodb/timings.out
 {{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{ directory }}/results/mongodb/load-unlimited.dat	
 sleep 20s
 {{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 100  > {{ directory }}/results/mongodb/unlimited.dat	
-sleep 20s
 
+{% if threads %}
+sleep 100s  
 for t in 1 2 3 4 5 7 10 15 20 30 40 50 75 100; do
 	for i in 2;do
 	echo "Threads $t $i $(date)" >>  {{ directory }}/results/mongodb/timings.out        
@@ -27,7 +28,10 @@ for t in 1 2 3 4 5 7 10 15 20 30 40 50 75 100; do
 
 	done
 done  
+{% endif %}
 
+{% if max-load %}
+sleep 100s
 for t in 100 300 500 700 900 1000 1250 1500 1750 2000 2500 3000 3500 4000 5000 6000; do
 	for i in 2;do
 	echo "Hockey $t $i $(date)" >>  {{ directory }}/results/mongodb/timings.out        
@@ -38,8 +42,10 @@ for t in 100 300 500 700 900 1000 1250 1500 1750 2000 2500 3000 3500 4000 5000 6
 	{{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 100 -target $t  > {{ directory }}/results/mongodb/target-$t-$i.dat
 
 	done
-done     
+done
+{%endif %}
 
+{% if availability-stop %}
 sleep 100s
 for host in {%for set in mongodb.replicaSets -%}
 				{%for node in set.nodes -%}
@@ -67,7 +73,9 @@ for host in {%for set in mongodb.replicaSets -%}
 		sleep 100s
 	done
 done
+{%endif %}
 
+{% if availability-kill %}
 sleep 100s
 for host in {%for set in mongodb.replicaSets -%}
 				{%for node in set.nodes -%}
@@ -95,7 +103,9 @@ for host in {%for set in mongodb.replicaSets -%}
 		sleep 100s
 	done
 done
+{%endif %}
 
+{% if availability-drop %}
 sleep 100s
 for host in {%for set in mongodb.replicaSets -%}
 				{%for node in set.nodes -%}
@@ -123,4 +133,5 @@ for host in {%for set in mongodb.replicaSets -%}
 		sleep 100s
 	done
 done
+{% endif %}
 {% endif %}

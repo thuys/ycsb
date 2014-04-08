@@ -19,6 +19,21 @@ sleep 50s
 {{directory}}/YCSB/bin/ycsb run jdbc -P {{directory}}/config/postgresql.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 30  > {{ directory }}/results/postgresql/unlimited.dat	
 sleep 20s
 
+{% if threads %}
+sleep 100s  
+for t in 1 2 3 4 5 7 10 15 20 30 40 50 75 100; do
+	for i in 2;do
+	echo "Threads $t $i $(date)" >>  {{ directory }}/results/mongodb/timings.out        
+	{{ directory }}/script/postgresql-delete
+	{{directory}}/YCSB/bin/ycsb load jdbc -P {{directory}}/config/postgresql.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	 > {{ directory }}/results/postgresql/load-target-$t-$i.dat;
+	sleep 50s
+	{{directory}}/YCSB/bin/ycsb run jdbc -P {{directory}}/config/postgresql.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads $t  > {{ directory }}/results/postgresql/threads-$t-$i.dat;
+	done
+done  
+{% endif %}
+
+{% if max-load %}
+sleep 100s
 for t in 20 50 100 150 200 250 300 400 500 600 700; do
 	for i in 2;do
 	echo "Hockey $t $i $(date)" >>  {{ directory }}/results/postgresql/timings.out        
@@ -30,7 +45,9 @@ for t in 20 50 100 150 200 250 300 400 500 600 700; do
 	
 	done;
 done;     
+{%endif %}
 
+{% if availability-stop %}
 sleep 100s
 {%for node in postgresql.pgpoolNodes %}
            
@@ -47,8 +64,10 @@ sleep 100s
 		{{ directory }}/script/postgresql-remote-recover {{ loop.index0}} {{ node.host.name }};
 	done;
 {% endfor %}
+{%endif %}
 
-
+{% if availability-kill %}
+sleep 100s
 {%for node in postgresql.pgpoolNodes %}
            
  	#postgresql - Continuous run: 900s!
@@ -64,7 +83,10 @@ sleep 100s
 		{{ directory }}/script/postgresql-remote-recover {{ loop.index0}} {{ node.host.name }};
 	done;
 {% endfor %}
+{%endif %}
 
+{% if availability-drop %}
+sleep 100s
 {%for node in postgresql.pgpoolNodes %}
            
  	#postgresql - Continuous run: 900s!
@@ -80,4 +102,5 @@ sleep 100s
 		{{ directory }}/script/postgresql-remote-recover {{ loop.index0}} {{ node.host.name }};
 	done;
 {% endfor %}
+{% endif %}
 {% endif %}

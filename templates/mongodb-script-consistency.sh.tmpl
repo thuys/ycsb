@@ -1,7 +1,7 @@
 #!/bin/bash
 {% if mongodbConsistency is defined %}
 {% if mongodbConsistency.nodes is defined %}
-
+{% if consistency %}
 mkdir -p {{ directory }}/results/mongodb-consistency
 rm -f -r {{ directory }}/results/mongodb-consistency/*  
 
@@ -36,5 +36,6 @@ updateMatrixRawExportFile={{directory}}/results/mongodb-consistency/updateRawDat
 	done
 done
 
+{% endif %}
 {% endif %}
 {% endif %}

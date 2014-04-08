@@ -1,6 +1,6 @@
 #!/bin/bash
 {% if hbase.hdfs is defined %}
-
+{% if consistency %}
 mkdir -p {{ directory }}/results/hbase-consistency
 rm -f -r {{ directory }}/results/hbase-consistency/*  
 
@@ -32,5 +32,5 @@ updateMatrixRawExportFile={{directory}}/results/hbase-consistency/updateRawData-
 	sleep 30s
 done
 
-
+{% endif %}
 {% endif %}

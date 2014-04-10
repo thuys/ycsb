@@ -41,7 +41,7 @@ for t in 20 50 100 150 200 250 300 400 500 600 700; do
 	{{ directory }}/script/postgresql-delete
 	{{directory}}/YCSB/bin/ycsb load jdbc -P {{directory}}/config/postgresql.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	 > {{ directory }}/results/postgresql/load-target-$t-$i.dat;
 	sleep 50s
-	{{directory}}/YCSB/bin/ycsb run jdbc -P {{directory}}/config/postgresql.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 30 -target $t  > {{ directory }}/results/postgresql/target-$t-$i.dat;
+	{{directory}}/YCSB/bin/ycsb run jdbc -P {{directory}}/config/postgresql.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 40 -target $t  > {{ directory }}/results/postgresql/target-$t-$i.dat;
 	
 	done;
 done;     

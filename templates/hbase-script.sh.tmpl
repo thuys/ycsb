@@ -21,7 +21,7 @@ sleep 20s
 sleep 100s  
 for t in 1 2 3 4 5 7 10 15 20 30 40 50 75 100; do
 	for i in 2;do
-	echo "Threads $t $i $(date)" >>  {{ directory }}/results/mongodb/timings.out        
+	echo "Threads $t $i $(date)" >>  {{ directory }}/results/hbase/timings.out        
 	{{ directory }}/script/hbase-delete
 	{{directory}}/YCSB/bin/ycsb load hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s > {{ directory }}/results/hbase/load-target-$t-$i.dat
 	sleep 50s	

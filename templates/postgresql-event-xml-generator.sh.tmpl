@@ -29,7 +29,7 @@ rm -r -f {{ directory }}/config/postgresql/*
 			{{ directory }}/script/all-remote-network-stop {{ node.host.name }}
 		</event>
 		<event id=\"Up\" startInMS=\"600000\">
-			{{ directory }}/script/all-remote-network-start {{ node.host.name }}
+			{{ directory }}/script/postgresql-remote-drop-recover {{ loop.index0}} {{ node.host.name }}
 		</event>
 	</events>" > {{ directory }}/config/postgresql/postgresql-event-{{ node.host.name }}-drop.xml
 {% endfor %}

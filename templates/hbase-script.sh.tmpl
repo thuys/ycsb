@@ -62,6 +62,8 @@ for host in {%for region in hbase.regions -%}
 		{{directory}}/YCSB/bin/ycsb load hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{directory}}/results/hbase/load-continuous-$host-$run.dat
 		sleep 50s
 		{{directory}}/YCSB/bin/ycsb run hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-continuous -s -target 200 -p eventFile={{directory}}/config/hbase/hbase-event-$host.xml > {{directory}}/results/hbase/continuous-$host-$run.dat
+		{{ directory }}/script/hbase-remote-soft regionserver start $host
+		
 		sleep 100s
 	done
 done
@@ -84,6 +86,7 @@ for host in {%for region in hbase.regions -%}
 		{{directory}}/YCSB/bin/ycsb load hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{directory}}/results/hbase/load-continuous-$host-kill-$run.dat
 		sleep 50s
 		{{directory}}/YCSB/bin/ycsb run hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-continuous -s -target 200 -p eventFile={{directory}}/config/hbase/hbase-event-$host-kill.xml > {{directory}}/results/hbase/continuous-$host-kill-$run.dat
+		{{ directory }}/script/hbase-remote-soft regionserver start $host
 		sleep 100s
 	done
 done
@@ -106,6 +109,8 @@ for host in {%for region in hbase.regions -%}
 		{{directory}}/YCSB/bin/ycsb load hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{directory}}/results/hbase/load-continuous-$host-drop-$run.dat
 		sleep 50s
 		{{directory}}/YCSB/bin/ycsb run hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-continuous -s -target 200 -p eventFile={{directory}}/config/hbase/hbase-event-$host-drop.xml > {{directory}}/results/hbase/continuous-$host-drop-$run.dat
+		{{ directory }}/script/hbase-remote-soft regionserver start $host
+		{{ directory }}/script/hadoop-remote-soft datanode start $host
 		sleep 100s
 	done
 done

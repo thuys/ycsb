@@ -34,6 +34,7 @@ for host in {%for datanode in hbase.hdfs.dataNodes -%}
 		{{directory}}/YCSB/bin/ycsb load hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{directory}}/results/hadoop/load-continuous-$host-$run.dat
 		sleep 50s
 		{{directory}}/YCSB/bin/ycsb run hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-continuous -s -target 200 -p eventFile={{directory}}/config/hadoop/hadoop-event-$host.xml > {{directory}}/results/hadoop/continuous-$host-$run.dat
+		{{ directory }}/script/hadoop-remote-soft datanode start $host
 		sleep 100s
 	done
 done
@@ -56,6 +57,7 @@ for host in {%for datanode in hbase.hdfs.dataNodes-%}
 		{{directory}}/YCSB/bin/ycsb load hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{directory}}/results/hadoop/load-continuous-$host-kill-$run.dat
 		sleep 50s
 		{{directory}}/YCSB/bin/ycsb run hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-continuous -s -target 200 -p eventFile={{directory}}/config/hadoop/hadoop-event-$host-kill.xml > {{directory}}/results/hadoop/continuous-$host-kill-$run.dat
+		{{ directory }}/script/hadoop-remote-soft datanode start $host
 		sleep 100s
 	done
 done

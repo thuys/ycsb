@@ -3,5 +3,6 @@
 mongodb.url = mongodb://{{mongodbConsistency.nodes[0].server.host.ip}}:{{mongodbConsistency.nodes[0].port}}
 mongodb.database = {{table}}-consistency
 mongodb.maxconnections = 3
+mongodb.connections = all
 {% endif %}
 {% endif %}

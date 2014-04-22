@@ -29,8 +29,10 @@ updateMatrixDelayExportFile={{directory}}/results/mongodb-consistency/updateDela
 insertMatrixNbOfChangesExportFile={{directory}}/results/mongodb-consistency/insertChanges-$writeStyle-$readStyle-$run.dat
 updateMatrixNbOfChangesExportFile={{directory}}/results/mongodb-consistency/updateChanges-$writeStyle-$readStyle-$run.dat
 insertMatrixRawExportFile={{directory}}/results/mongodb-consistency/insertRawData-$writeStyle-$readStyle-$run.dat
-updateMatrixRawExportFile={{directory}}/results/mongodb-consistency/updateRawData-$writeStyle-$readStyle-$run.dat" > {{directory}}/config/mongodb-consistency-tmp.conf
-		{{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb-consistency.conf -P {{directory}}/config/workload-ycsb-thomas-consistency -P {{directory}}/config/workload-ycsb-thomas-consistency-run -P {{directory}}/config/mongodb-consistency-tmp.conf -s -target 200  > {{directory}}/results/mongodb-consistency/continuous-$writeStyle-$readStyle-$run.dat
+updateMatrixRawExportFile={{directory}}/results/mongodb-consistency/updateRawData-$writeStyle-$readStyle-$run.dat
+mongodb.readPreference=$readStyle
+mongodb." > {{directory}}/config/mongodb-consistency-tmp.conf
+		{{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb-consistency.conf -P {{directory}}/config/workload-ycsb-thomas-consistency -P {{directory}}/config/workload-ycsb-thomas-consistency-run -P {{directory}}/config/mongodb-consistency-tmp.conf -p mongodb.writeConcern=$writeStyle -p mongodb.readPreference=$readStyle -s -target 200  > {{directory}}/results/mongodb-consistency/continuous-$writeStyle-$readStyle-$run.dat
 			sleep 30s
 		done
 	done

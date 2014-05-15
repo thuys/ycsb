@@ -101,7 +101,7 @@ pgMaster = postgresql::PgpoolMain(host = vmPG3, pgpoolNodes = [pgNode1, pgNode2]
 
 ##
 ycsb = ycsb::YCSB(host=vmYCSB, mongodb = mongoDBCluster, mongodbConsistency = set1, postgresql = pgMaster, hbase = hbaseCluster, table="ycsb", 
-	threads = false, maxLoad = false,
-	availabilityStop = false, availabilityKill = false, availabilityDrop = false, 
+	threads = true, maxLoad = true,
+	availabilityStop = true, availabilityKill = true, availabilityDrop = true, 
 	consistency = true)
 #ycsb2 = ycsb::YCSB(host=vmYCSB2, mongodb = mongoDBCluster, mongodbConsistency = set1, postgresql = pgMaster, hbase = hbaseCluster, table="ycsb-2")

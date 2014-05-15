@@ -34,7 +34,7 @@ done
 
 {% if maxLoad %}
 sleep 100s
-for t in 20 50 100 150 200 250 300 400 500 600 700; do
+for t in 20 50 100 150 200 250 300 400 500 600 700 800 900 1000; do
 	for i in 2;do
 	echo "Hockey $t $i $(date)" >>  {{ directory }}/results/postgresql/timings.out        
 	

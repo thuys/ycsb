@@ -64,7 +64,7 @@ mongoN2 = mongodb::MongoDBNode(host=mongo2, server=mongo2Server, datadir = "/mnt
 mongoN3 = mongodb::MongoDBNode(host=mongo3, server=mongo3Server, datadir = "/mnt/mongod")
 mongoN4 = mongodb::MongoDBNode(host=mongo4, server=mongo4Server, datadir = "/mnt/mongod")
 mongoN5 = mongodb::MongoDBNode(host=mongo5, server=mongo5Server, datadir = "/mnt/mongod")
-mongoN6 = mongodb::MongoDBNode(host=mongo5, server=mongo6Server, datadir = "/mnt/mongod")
+mongoN6 = mongodb::MongoDBNode(host=mongo6, server=mongo6Server, datadir = "/mnt/mongod")
 
 
 set1 = mongodb::MongoDBReplicaSet(name="repl1", nodes = [mongoN1, mongoN2, mongoN3])

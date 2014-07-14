@@ -5,17 +5,18 @@ vmHB4 = ip::Host(name = "vmhb4", os = "fedora-18", ip = "172.16.32.12")
 vmHB5 = ip::Host(name = "vmhb5", os = "fedora-18", ip = "172.16.32.13")
 vmHB6 = ip::Host(name = "vmhb6", os = "fedora-18", ip = "172.16.32.14")
 
-vmMDB1 = ip::Host(name = "vmmdb1", os = "fedora-18", ip = "172.16.32.34")
-vmMDB2 = ip::Host(name = "vmmdb2", os = "fedora-18", ip = "172.16.32.35")
-vmMDB3 = ip::Host(name = "vmmdb3", os = "fedora-18", ip = "172.16.32.36")
-vmMDB4 = ip::Host(name = "vmmdb4", os = "fedora-18", ip = "172.16.32.37")
-vmMDB5 = ip::Host(name = "vmmdb5", os = "fedora-18", ip = "172.16.32.38")
+vmMDB1 = ip::Host(name = "vmmdb1", os = "fedora-18", ip = "172.16.32.45")
+vmMDB2 = ip::Host(name = "vmmdb2", os = "fedora-18", ip = "172.16.32.46")
+vmMDB3 = ip::Host(name = "vmmdb3", os = "fedora-18", ip = "172.16.32.47")
+vmMDB4 = ip::Host(name = "vmmdb4", os = "fedora-18", ip = "172.16.32.48")
+vmMDB5 = ip::Host(name = "vmmdb5", os = "fedora-18", ip = "172.16.32.49")
+vmMDB6 = ip::Host(name = "vmmdb5", os = "fedora-18", ip = "172.16.32.50")
 
-vmPG1 = ip::Host(name = "vmpg1", os = "fedora-18", ip = "172.16.32.39")
-vmPG2 = ip::Host(name = "vmpg2", os = "fedora-18", ip = "172.16.32.40")
-vmPG3 = ip::Host(name = "vmpg3", os = "fedora-18", ip = "172.16.32.41")
+vmPG1 = ip::Host(name = "vmpg1", os = "fedora-18", ip = "172.16.32.51")
+vmPG2 = ip::Host(name = "vmpg2", os = "fedora-18", ip = "172.16.32.52")
+vmPG3 = ip::Host(name = "vmpg3", os = "fedora-18", ip = "172.16.32.53")
 
-vmYCSB = ip::Host(name = "ycsb", os = "fedora-18", ip = "172.16.32.33")
+vmYCSB = ip::Host(name = "ycsb", os = "fedora-18", ip = "172.16.32.44")
 
 #vmYCSB2 = ip::Host(name = "ycsb-2", os = "fedora-18", ip = "172.16.32.15")
 ## HBASE ##
@@ -48,12 +49,14 @@ mongo2 = mongodb::MongoDB(host = vmMDB2)
 mongo3 = mongodb::MongoDB(host = vmMDB3)
 mongo4 = mongodb::MongoDB(host = vmMDB4)
 mongo5 = mongodb::MongoDB(host = vmMDB5)
+mongo6 = mongodb::MongoDB(host = vmMDB6)
 
 mongo1Server = mongodb::MongoDBServer(host=vmMDB1)
 mongo2Server = mongodb::MongoDBServer(host=vmMDB2)
 mongo3Server = mongodb::MongoDBServer(host=vmMDB3)
 mongo4Server = mongodb::MongoDBServer(host=vmMDB4)
 mongo5Server = mongodb::MongoDBServer(host=vmMDB5)
+mongo6Server = mongodb::MongoDBServer(host=vmMDB6)
 
 
 mongoN1 = mongodb::MongoDBNode(host=mongo1, server=mongo1Server, datadir = "/mnt/mongod" )
@@ -61,6 +64,7 @@ mongoN2 = mongodb::MongoDBNode(host=mongo2, server=mongo2Server, datadir = "/mnt
 mongoN3 = mongodb::MongoDBNode(host=mongo3, server=mongo3Server, datadir = "/mnt/mongod")
 mongoN4 = mongodb::MongoDBNode(host=mongo4, server=mongo4Server, datadir = "/mnt/mongod")
 mongoN5 = mongodb::MongoDBNode(host=mongo5, server=mongo5Server, datadir = "/mnt/mongod")
+mongoN6 = mongodb::MongoDBNode(host=mongo5, server=mongo5Server, datadir = "/mnt/mongod")
 
 
 set1 = mongodb::MongoDBReplicaSet(name="repl1", nodes = [mongoN1, mongoN2, mongoN3])

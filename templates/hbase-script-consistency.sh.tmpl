@@ -21,7 +21,7 @@ for run in 1 2 ;do
 	{{ directory }}/script/hbase-delete
 	
 	{{directory}}/YCSB/bin/ycsb load hbase -P {{directory}}/config/hbase.conf -P {{directory}}/config/workload-ycsb-thomas-consistency -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{directory}}/results/hbase-consistency/load-continuous-$writeStyle-$readStyle-$run.dat
-	sleep 20s
+	sleep 50s
 echo "insertMatrixDelayExportFile={{directory}}/results/hbase-consistency/insertDelay-$run.dat
 updateMatrixDelayExportFile={{directory}}/results/hbase-consistency/updateDelay-$run.dat
 insertMatrixNbOfChangesExportFile={{directory}}/results/hbase-consistency/insertChanges-$run.dat

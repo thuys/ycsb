@@ -23,7 +23,7 @@ for writeStyle in none safe normal fsync_safe replicas_safe majority; do
 			{{ directory }}/script/mongodb-delete-consistency
 			
 			{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb-consistency.conf -P {{directory}}/config/workload-ycsb-thomas-consistency -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{directory}}/results/mongodb-consistency/load-continuous-$writeStyle-$readStyle-$run.dat
-			sleep 20s
+			sleep 50s
 echo "insertMatrixDelayExportFile={{directory}}/results/mongodb-consistency/insertDelay-$writeStyle-$readStyle-$run.dat
 updateMatrixDelayExportFile={{directory}}/results/mongodb-consistency/updateDelay-$writeStyle-$readStyle-$run.dat
 insertMatrixNbOfChangesExportFile={{directory}}/results/mongodb-consistency/insertChanges-$writeStyle-$readStyle-$run.dat

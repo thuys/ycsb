@@ -5,17 +5,17 @@ vmHB4 = ip::Host(name = "vmhb4", os = "fedora-18", ip = "172.16.32.12")
 vmHB5 = ip::Host(name = "vmhb5", os = "fedora-18", ip = "172.16.32.13")
 vmHB6 = ip::Host(name = "vmhb6", os = "fedora-18", ip = "172.16.32.14")
 
-vmMDB1 = ip::Host(name = "vmmdb1", os = "fedora-18", ip = "172.16.32.4")
-vmMDB2 = ip::Host(name = "vmmdb2", os = "fedora-18", ip = "172.16.32.5")
-vmMDB3 = ip::Host(name = "vmmdb3", os = "fedora-18", ip = "172.16.32.6")
-vmMDB4 = ip::Host(name = "vmmdb4", os = "fedora-18", ip = "172.16.32.7")
-vmMDB5 = ip::Host(name = "vmmdb5", os = "fedora-18", ip = "172.16.32.8")
+vmMDB1 = ip::Host(name = "vmmdb1", os = "fedora-18", ip = "172.16.32.34")
+vmMDB2 = ip::Host(name = "vmmdb2", os = "fedora-18", ip = "172.16.32.35")
+vmMDB3 = ip::Host(name = "vmmdb3", os = "fedora-18", ip = "172.16.32.36")
+vmMDB4 = ip::Host(name = "vmmdb4", os = "fedora-18", ip = "172.16.32.37")
+vmMDB5 = ip::Host(name = "vmmdb5", os = "fedora-18", ip = "172.16.32.38")
 
-vmPG1 = ip::Host(name = "vmpg1", os = "fedora-18", ip = "172.16.32.15")
-vmPG2 = ip::Host(name = "vmpg2", os = "fedora-18", ip = "172.16.32.16")
-vmPG3 = ip::Host(name = "vmpg3", os = "fedora-18", ip = "172.16.32.17")
+vmPG1 = ip::Host(name = "vmpg1", os = "fedora-18", ip = "172.16.32.39")
+vmPG2 = ip::Host(name = "vmpg2", os = "fedora-18", ip = "172.16.32.40")
+vmPG3 = ip::Host(name = "vmpg3", os = "fedora-18", ip = "172.16.32.41")
 
-vmYCSB = ip::Host(name = "ycsb", os = "fedora-18", ip = "172.16.32.2")
+vmYCSB = ip::Host(name = "ycsb", os = "fedora-18", ip = "172.16.32.33")
 
 #vmYCSB2 = ip::Host(name = "ycsb-2", os = "fedora-18", ip = "172.16.32.15")
 ## HBASE ##
@@ -100,8 +100,9 @@ pgMaster = postgresql::PgpoolMain(host = vmPG3, pgpoolNodes = [pgNode1, pgNode2]
 
 
 ##
-ycsb = ycsb::YCSB(host=vmYCSB, mongodb = mongoDBCluster, mongodbConsistency = set1, postgresql = pgMaster, hbase = hbaseCluster, table="ycsb", 
-	threads = true, maxLoad = true,
-	availabilityStop = true, availabilityKill = true, availabilityDrop = true, 
-	consistency = true)
+ycsb = ycsb::YCSB(host=vmYCSB, mongodb = mongoDBCluster, mongodbConsistency = set1, postgresql = pgMaster,  table="ycsb", 
+	threads = true, maxLoad = false,
+	availabilityStop = false, availabilityKill = false, availabilityDrop = false, 
+	consistency = false)
+# hbase = hbaseCluster,
 #ycsb2 = ycsb::YCSB(host=vmYCSB2, mongodb = mongoDBCluster, mongodbConsistency = set1, postgresql = pgMaster, hbase = hbaseCluster, table="ycsb-2")

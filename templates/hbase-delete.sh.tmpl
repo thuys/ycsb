@@ -1,2 +1,4 @@
 #!/bin/bash
+{% if hbase.hdfs is defined %}
 ssh {{ hbase.masters[0].host.host.name }} 'echo "truncate \"{{table}}\"" | hbase shell'
+{% endif %}

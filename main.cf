@@ -59,12 +59,12 @@ mongo5Server = mongodb::MongoDBServer(host=vmMDB5)
 mongo6Server = mongodb::MongoDBServer(host=vmMDB6)
 
 
-mongoN1 = mongodb::MongoDBNode(host=mongo1, server=mongo1Server, datadir = "/mnt/mongod" )
-mongoN2 = mongodb::MongoDBNode(host=mongo2, server=mongo2Server, datadir = "/mnt/mongod")
-mongoN3 = mongodb::MongoDBNode(host=mongo3, server=mongo3Server, datadir = "/mnt/mongod")
-mongoN4 = mongodb::MongoDBNode(host=mongo4, server=mongo4Server, datadir = "/mnt/mongod")
-mongoN5 = mongodb::MongoDBNode(host=mongo5, server=mongo5Server, datadir = "/mnt/mongod")
-mongoN6 = mongodb::MongoDBNode(host=mongo6, server=mongo6Server, datadir = "/mnt/mongod")
+mongoN1 = mongodb::MongoDBNode(host=mongo1, server=mongo1Server)
+mongoN2 = mongodb::MongoDBNode(host=mongo2, server=mongo2Server)
+mongoN3 = mongodb::MongoDBNode(host=mongo3, server=mongo3Server)
+mongoN4 = mongodb::MongoDBNode(host=mongo4, server=mongo4Server)
+mongoN5 = mongodb::MongoDBNode(host=mongo5, server=mongo5Server)
+mongoN6 = mongodb::MongoDBNode(host=mongo6, server=mongo6Server)
 
 
 set1 = mongodb::MongoDBReplicaSet(name="repl1", nodes = [mongoN1, mongoN2, mongoN3])
@@ -97,8 +97,8 @@ keyYCSB2 = mongodb::MongoDBKey(name = "_id", valueString = "hashed", collection 
 monitoringAgent = mongodb::MongoDBMonitoringAgent(key = "cac82dfebac6a861d6bd1cb147f06d57", host = vmMDB4)
 ## POSTGRESQL 
 
-pgNode1 = postgresql::PgpoolNode(host = vmPG1, datadir = "/mnt-2/pgsql")
-pgNode2 = postgresql::PgpoolNode(host = vmPG2, datadir = "/mnt-2/pgsql")
+pgNode1 = postgresql::PgpoolNode(host = vmPG1)
+pgNode2 = postgresql::PgpoolNode(host = vmPG2)
 
 pgMaster = postgresql::PgpoolMain(host = vmPG3, pgpoolNodes = [pgNode1, pgNode2])
 

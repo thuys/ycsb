@@ -17,5 +17,4 @@
 # Yahoo! Cloud System Benchmark
 # Workload Thomas: Update heavy workload
 
-threadcount=20
 maxexecutiontime=900

@@ -70,7 +70,7 @@ for host in {%for set in mongodb.replicaSets -%}
 		{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{directory}}/results/mongodb/load-continuous-$host-$run.dat
 		sleep 50s
 		{{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-continuous -s -threads 15 -target 200 -p eventFile={{directory}}/config/mongodb/mongodb-event-$host.xml > {{directory}}/results/mongodb/continuous-$host-$run.dat
-		{{ directory }}/script/mongodb-remote-soft mongod start $host
+		{{ directory }}/script/mongodb-remote-soft mongodb-dataserver start $host
 		sleep 100s
 	done
 done
@@ -132,7 +132,7 @@ for host in {%for set in mongodb.replicaSets -%}
 		{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{directory}}/results/mongodb/load-continuous-$host-drop-$run.dat
 		sleep 50s
 		{{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-continuous -s -threads 15 -target 200 -p eventFile={{directory}}/config/mongodb/mongodb-event-$host-drop.xml > {{directory}}/results/mongodb/continuous-$host-drop-$run.dat
-		{{ directory }}/script/mongodb-remote-soft mongod start $host
+		{{ directory }}/script/mongodb-remote-soft mongodb-dataserver start $host
 		sleep 100s
 	done
 done

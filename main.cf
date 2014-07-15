@@ -4,6 +4,7 @@ vmHB3 = ip::Host(name = "vmhb3", os = "fedora-18", ip = "172.16.32.11")
 vmHB4 = ip::Host(name = "vmhb4", os = "fedora-18", ip = "172.16.32.12")
 vmHB5 = ip::Host(name = "vmhb5", os = "fedora-18", ip = "172.16.32.13")
 vmHB6 = ip::Host(name = "vmhb6", os = "fedora-18", ip = "172.16.32.14")
+vmHB7 = ip::Host(name = "vmhb6", os = "fedora-18", ip = "172.16.32.14")
 
 vmMDB1 = ip::Host(name = "vmmdb1", os = "fedora-18", ip = "172.16.32.45")
 vmMDB2 = ip::Host(name = "vmmdb2", os = "fedora-18", ip = "172.16.32.46")
@@ -25,7 +26,8 @@ hbaseHost2 = hbase::HBaseBasic(host = vmHB2)
 hbaseHost3 = hbase::HBaseBasic(host = vmHB3)
 hbaseHost4 = hbase::HBaseBasic(host = vmHB4)
 hbaseHost5 = hbase::HBaseBasic(host = vmHB5)
-hbaseHost6 = hbase::HBaseBasic(host = vmHB6)
+hbaseHost5 = hbase::HBaseBasic(host = vmHB6)
+hbaseHost5 = hbase::HBaseBasic(host = vmHB7)
 
 master = hbase::HBaseMaster(host = hbaseHost1)
 region1 = hbase::HBaseRegion(host = hbaseHost2)
@@ -38,10 +40,12 @@ dataNode2 = hbase::HadoopDataHDFS(host = hbaseHost3)
 dataNode3 = hbase::HadoopDataHDFS(host = hbaseHost4)
 dataNode4 = hbase::HadoopDataHDFS(host = hbaseHost5)
 
-zookeeper = hbase::Zookeeper(host = hbaseHost6)
-hdfs = hbase::HadoopHDFS(host = hbaseHost6, dataNodes=[dataNode1, dataNode2, dataNode3, dataNode4])
+zookeeper1 = hbase::Zookeeper(host = hbaseHost1, number = "1")
+zookeeper1 = hbase::Zookeeper(host = hbaseHost6, number = "2")
+zookeeper1 = hbase::Zookeeper(host = hbaseHost7, number = "3")
+hdfs = hbase::HadoopHDFS(host = hbaseHost1, dataNodes=[dataNode1, dataNode2, dataNode3, dataNode4])
 
-hbaseCluster = hbase::HBaseCluster(masters=[master], regions=[region1, region2, region3, region4], zookeepers = zookeeper, hdfs = hdfs)
+hbaseCluster = hbase::HBaseCluster(masters=[master], regions=[region1, region2, region3, region4], zookeepers = [zookeeper1, zookeeper2, zookeeper3], hdfs = hdfs)
 
 ## MongoDB ## 
 mongo1 = mongodb::MongoDB(host = vmMDB1)

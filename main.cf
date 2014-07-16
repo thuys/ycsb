@@ -1,10 +1,10 @@
-vmHB1 = ip::Host(name = "vmhb1", os = "fedora-18", ip = "172.16.32.9")
-vmHB2 = ip::Host(name = "vmhb2", os = "fedora-18", ip = "172.16.32.10")
-vmHB3 = ip::Host(name = "vmhb3", os = "fedora-18", ip = "172.16.32.11")
-vmHB4 = ip::Host(name = "vmhb4", os = "fedora-18", ip = "172.16.32.12")
-vmHB5 = ip::Host(name = "vmhb5", os = "fedora-18", ip = "172.16.32.13")
-vmHB6 = ip::Host(name = "vmhb6", os = "fedora-18", ip = "172.16.32.14")
-vmHB7 = ip::Host(name = "vmhb6", os = "fedora-18", ip = "172.16.32.14")
+vmHB1 = ip::Host(name = "vmhb1", os = "fedora-18", ip = "172.16.32.63")
+vmHB2 = ip::Host(name = "vmhb2", os = "fedora-18", ip = "172.16.32.64")
+vmHB3 = ip::Host(name = "vmhb3", os = "fedora-18", ip = "172.16.32.65")
+vmHB4 = ip::Host(name = "vmhb4", os = "fedora-18", ip = "172.16.32.66")
+vmHB5 = ip::Host(name = "vmhb5", os = "fedora-18", ip = "172.16.32.67")
+vmHB6 = ip::Host(name = "vmhb6", os = "fedora-18", ip = "172.16.32.68")
+vmHB7 = ip::Host(name = "vmhb7", os = "fedora-18", ip = "172.16.32.71")
 
 vmMDB1 = ip::Host(name = "vmmdb1", os = "fedora-18", ip = "172.16.32.45")
 vmMDB2 = ip::Host(name = "vmmdb2", os = "fedora-18", ip = "172.16.32.46")
@@ -108,9 +108,9 @@ pgMaster = postgresql::PgpoolMain(host = vmPG3, pgpoolNodes = [pgNode1, pgNode2]
 
 
 ##
-ycsb = ycsb::YCSB(host=vmYCSB, mongodb = mongoDBCluster, mongodbConsistency = set1, postgresql = pgMaster,  table="ycsb", 
-	threads = false, maxLoad = true,
+ycsb = ycsb::YCSB(host=vmYCSB, hbase = hbaseCluster, postgresql = pgMaster,  table="ycsb", 
+	threads = true, maxLoad = false,
 	availabilityStop = false, availabilityKill = true, availabilityDrop = true, 
 	consistency = true)
-# hbase = hbaseCluster,
+# mongodb = mongoDBCluster, mongodbConsistency = set1, 
 #ycsb2 = ycsb::YCSB(host=vmYCSB2, mongodb = mongoDBCluster, mongodbConsistency = set1, postgresql = pgMaster, hbase = hbaseCluster, table="ycsb-2")

@@ -46,7 +46,7 @@ zookeeper3 = hbase::Zookeeper(host = hbaseHost7, number = "3")
 hdfs = hbase::HadoopHDFS(host = hbaseHost1, dataNodes=[dataNode1, dataNode2, dataNode3, dataNode4])
 
 #hbaseCluster = hbase::HBaseCluster(masters=[master], regions=[region1, region2, region3, region4], zookeepers = [zookeeper1, zookeeper2, zookeeper3], hdfs = hdfs)
-hbaseCluster = hbase::HBaseCluster(masters=[master], regions=[region1, region2, region3, region4], zookeepers = [zookeeper1], hdfs = hdfs)
+hbaseCluster = hbase::HBaseCluster(masters=[master], regions=[region1, region2, region3, region4], zookeepers = zookeeper1, hdfs = hdfs)
 
 ## MongoDB ## 
 mongo1 = mongodb::MongoDB(host = vmMDB1)

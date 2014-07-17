@@ -112,5 +112,5 @@ ycsb = ycsb::YCSB(host=vmYCSB, hbase = hbaseCluster, postgresql = pgMaster,  tab
 	threads = false, maxLoad = false,
 	availabilityStop = true, availabilityKill = true, availabilityDrop = true, 
 	consistency = true)
-# mongodb = mongoDBCluster, mongodbConsistency = set1, 
-#ycsb2 = ycsb::YCSB(host=vmYCSB2, mongodb = mongoDBCluster, mongodbConsistency = set1, postgresql = pgMaster, hbase = hbaseCluster, table="ycsb-2")
+# mongodb = mongoDBCluster, mongodbConsistency = set2, 
+#ycsb2 = ycsb::YCSB(host=vmYCSB2, mongodb = mongoDBCluster, mongodbConsistency = set2, postgresql = pgMaster, hbase = hbaseCluster, table="ycsb-2")

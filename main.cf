@@ -79,11 +79,11 @@ controller1 = mongodb::MongoDBReplicaSetController(host=mongo1, replicaSet = set
 controller2 = mongodb::MongoDBReplicaSetController(host=mongo4, replicaSet = set2, connectingNode = mongoN4)
 
 mongoDBCluster = mongodb::MongoDBShardCluster(replicaSets = [set1, set2])
-shardController = mongodb::MongoDBShardController(host=mongo5, accessServer = access3, shardCluster = mongoDBCluster)
+shardController = mongodb::MongoDBShardController(host=mongo5, accessServer = access2, shardCluster = mongoDBCluster)
 
 access1 = mongodb::MongoDBAccessServer(host=mongo2, server= mongo2Server, shardCluster = mongoDBCluster)
 access2 = mongodb::MongoDBAccessServer(host=mongo3, server= mongo3Server, shardCluster = mongoDBCluster)
-access3 = mongodb::MongoDBAccessServer(host=mongo4, server= mongo4Server, shardCluster = mongoDBCluster)
+#access3 = mongodb::MongoDBAccessServer(host=mongo4, server= mongo4Server, shardCluster = mongoDBCluster)
 
 config1 = mongodb::MongoDBConfigServer(host=mongo2, server= mongo2Server, shardCluster = mongoDBCluster)
 

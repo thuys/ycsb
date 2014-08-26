@@ -18,30 +18,30 @@ for host in {%for set in mongodb.replicaSets -%}
                  
 	echo "<?xml version=\"1.0\"?>
 	<events>
-		<event id=\"Down\" startInMS=\"300000\">
+		<event id=\"Down\" startInMS=\"30000\">
 			{{ directory }}/script/mongodb-remote-soft mongodb-dataserver stop $host
 		</event>
-		<event id=\"Up\" startInMS=\"600000\">
+		<event id=\"Up\" startInMS=\"60000\">
 			{{ directory }}/script/mongodb-remote-soft mongodb-dataserver restart $host
 		</event>
 	</events>" > {{ directory }}/config/mongodb/mongodb-event-$host.xml;
 	
 	echo "<?xml version=\"1.0\"?>
 	<events>
-		<event id=\"Down\" startInMS=\"300000\">
+		<event id=\"Down\" startInMS=\"30000\">
 			{{ directory }}/script/mongodb-remote-hard-stop mongodb KILL $host
 		</event>
-		<event id=\"Up\" startInMS=\"600000\">
+		<event id=\"Up\" startInMS=\"60000\">
 			{{ directory }}/script/mongodb-remote-soft mongodb-dataserver restart $host
 		</event>
 	</events>" > {{ directory }}/config/mongodb/mongodb-event-$host-kill.xml;
 	
 	echo "<?xml version=\"1.0\"?>
 	<events>
-		<event id=\"Down\" startInMS=\"300000\">
+		<event id=\"Down\" startInMS=\"30000\">
 			{{ directory }}/script/all-remote-network-stop $host
 		</event>
-		<event id=\"Up\" startInMS=\"600000\">
+		<event id=\"Up\" startInMS=\"60000\">
 			{{ directory }}/script/all-remote-network-start $host
 		</event>
 	</events>" > {{ directory }}/config/mongodb/mongodb-event-$host-drop.xml;

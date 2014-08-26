@@ -6,7 +6,19 @@
 mkdir -p {{ directory }}/results/mongodb
 rm -f -r {{ directory }}/results/mongodb/*  
 
-for host in {{ mongodb.replicaSets[0].nodes[0].server.host.name }}; do 
+for host in {%for set in mongodb.replicaSets -%}
+				{%for node in set.nodes -%}
+	                {{ node.server.host.name }}
+	                    {%- if not loop.last -%} 
+	                        {{ ' '}} 
+	                    {%- endif -%}
+                 {%- endfor %}  {{ ' '}}
+            {%- endfor %} {%for node in mongodb.singleNodes -%}
+	                {{ node.server.host.name }}
+	                    {%- if not loop.last -%} 
+	                        {{ ' '}} 
+	                    {%- endif -%}
+                 {%- endfor %}; do 
             
  	#mongodb - Continuous run: 900s!
 		echo "Continiuum $host $run $(date)" >>  {{ directory }}/results/mongodb/timings.out        

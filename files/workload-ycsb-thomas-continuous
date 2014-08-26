@@ -17,4 +17,4 @@
 # Yahoo! Cloud System Benchmark
 # Workload Thomas: Update heavy workload
 
-maxexecutiontime=900
+maxexecutiontime=100

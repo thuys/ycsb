@@ -32,7 +32,7 @@ maxscanlength=100
 
 scanlengthdistribution=uniform
 
-recordcount=300000
-operationcount=3000000
+recordcount=30000
+operationcount=300000
 measurementtype=timeseries
 timeseries.granularity=1000

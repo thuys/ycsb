@@ -1,4 +1,6 @@
+{% if postgresql.host is defined %}
 db.driver=org.postgresql.Driver
 db.url=jdbc:postgresql://{{postgresql.host.name}}:{{postgresql.port}}/{{table}}
 db.user=postgres
 db.passwd=postgres
+{% endif %}

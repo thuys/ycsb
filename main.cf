@@ -1,6 +1,6 @@
 vmMDB1 = ip::Host(name = "vmmdb1", os = "fedora-18", ip = "172.16.32.89")
 vmMDB2 = ip::Host(name = "vmmdb2", os = "fedora-18", ip = "172.16.32.90")
-vmMDB3 = ip::Host(name = "vmmdb3", os = "fedora-18", ip = "172.16.32.91")
+vmMDB3 = ip::Host(name = "vmmdb3", os = "fedora-18", ip = "172.16.32.95")
 vmMDB4 = ip::Host(name = "vmmdb4", os = "fedora-18", ip = "172.16.32.92")
 vmMDB5 = ip::Host(name = "vmmdb5", os = "fedora-18", ip = "172.16.32.93")
 vmMDB6 = ip::Host(name = "vmmdb6", os = "fedora-18", ip = "172.16.32.94")

@@ -106,6 +106,10 @@ implementation ycsb-mongodb:
     			owner = "root", group = "root", mode = 755)
     benchScript.requires = eventGenerator
     
+    benchScriptReload =  std::File(host = host, path = "{{directory}}/script/mongodb-script-preload", content = template("ycsb/mongodb-script-preload.sh.tmpl"), reload = true,
+    			owner = "root", group = "root", mode = 755)
+    benchScriptReload.requires = eventGenerator
+    
     ##Consistency
     configFileConsistency= std::ConfigFile(host = host, path = "{{directory}}/config/mongodb-consistency.conf", content = template("ycsb/mongodb-consistency.conf.tmpl"), reload = true)
     configFileConsistency.requires = std::Directory[host = host, path = "{{directory}}/config"]

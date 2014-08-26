@@ -2,4 +2,6 @@
 # $1: which service 
 # $2: What? (KILL/...)
 # $3: where
+{% if postgresql.host is defined %}
 echo "kill -s $2 \$(cat {{postgresql.pgpoolNodes[0].datadir}}/postmaster.pid)" | ssh $3
+{% endif %}

@@ -1,17 +1,9 @@
 #!/bin/bash
 {% if mongodb.accessServers is defined %}
-
-{{directory}}/script/mongodb-event-generator
-
-mkdir -p {{ directory }}/results/mongodb
-rm -f -r {{ directory }}/results/mongodb/*  
-
 for host in {{ mongodb.replicaSets[0].nodes[0].server.host.name }}; do 
             
  	#mongodb - Continuous run: 900s!
 		echo "Continiuum $host $run $(date)" >>  {{ directory }}/results/mongodb/timings.out        
-		{{ directory }}/script/mongodb-delete
-		{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{directory}}/results/mongodb/load-continuous-$host-$run.dat
 		{{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-continuous -s -threads 15 -target 200 -p eventFile={{directory}}/config/mongodb/mongodb-event-$host.xml > {{directory}}/results/mongodb/continuous-$host-$run.dat
 		{{ directory }}/script/mongodb-remote-soft mongodb-dataserver start $host
 done

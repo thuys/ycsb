@@ -6,47 +6,6 @@
 mkdir -p {{ directory }}/results/mongodb
 rm -f -r {{ directory }}/results/mongodb/*  
 
-touch {{ directory }}/results/mongodb/timings.out
-
-echo "Start $(date)" >>  {{ directory }}/results/mongodb/timings.out        
-{{ directory }}/script/mongodb-delete
-
-{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{ directory }}/results/mongodb/load-unlimited.dat	
-sleep 20s
-{{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 100  > {{ directory }}/results/mongodb/unlimited.dat	
-
-{% if threads %}
-sleep 100s  
-for t in 1 2 3 4 5 7 10 15 20 30 40 50 75 100; do
-	for i in 2;do
-	echo "Threads $t $i $(date)" >>  {{ directory }}/results/mongodb/timings.out        
-	{{ directory }}/script/mongodb-delete
-	
-	{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{ directory }}/results/mongodb/load-threads-$t-$i.dat
-	sleep 50s
-	{{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads $t  > {{ directory }}/results/mongodb/threads-$t-$i.dat
-
-	done
-done  
-{% endif %}
-
-{% if maxLoad %}
-sleep 100s
-for t in  20 50 100 150 200 250 300 400 500 600 700 800 900 1000 1500 2000; do
-	for i in 2;do
-	echo "Hockey $t $i $(date)" >>  {{ directory }}/results/mongodb/timings.out        
-	{{ directory }}/script/mongodb-delete
-	
-	{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{ directory }}/results/mongodb/load-target-$t-$i.dat
-	sleep 50s
-	{{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-stress-load -s -threads 15 -target $t  > {{ directory }}/results/mongodb/target-$t-$i.dat
-
-	done
-done
-{%endif %}
-
-{% if availabilityStop %}
-sleep 100s
 for host in {%for set in mongodb.replicaSets -%}
 				{%for node in set.nodes -%}
 	                {{ node.server.host.name }}
@@ -62,79 +21,10 @@ for host in {%for set in mongodb.replicaSets -%}
                  {%- endfor %}; do 
             
  	#mongodb - Continuous run: 900s!
-	for run in 1 2 ;do
 		echo "Continiuum $host $run $(date)" >>  {{ directory }}/results/mongodb/timings.out        
-		
 		{{ directory }}/script/mongodb-delete
-		
 		{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{directory}}/results/mongodb/load-continuous-$host-$run.dat
-		sleep 50s
 		{{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-continuous -s -threads 15 -target 200 -p eventFile={{directory}}/config/mongodb/mongodb-event-$host.xml > {{directory}}/results/mongodb/continuous-$host-$run.dat
 		{{ directory }}/script/mongodb-remote-soft mongodb-dataserver start $host
-		sleep 100s
-	done
 done
 {%endif %}
-
-{% if availabilityKill %}
-sleep 100s
-for host in {%for set in mongodb.replicaSets -%}
-				{%for node in set.nodes -%}
-	                {{ node.server.host.name }}
-	                    {%- if not loop.last -%} 
-	                        {{ ' '}} 
-	                    {%- endif -%}
-                 {%- endfor %}  {{ ' '}}
-            {%- endfor %} {%for node in mongodb.singleNodes -%}
-	                {{ node.server.host.name }}
-	                    {%- if not loop.last -%} 
-	                        {{ ' '}} 
-	                    {%- endif -%}
-                 {%- endfor %}; do 
-            
- 	#mongodb - Continuous run: 900s!
-	for run in 1 2 ;do
-		echo "Continiuum $host KILL $run $(date)" >>  {{ directory }}/results/mongodb/timings.out        
-		
-		{{ directory }}/script/mongodb-delete
-		
-		{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{directory}}/results/mongodb/load-continuous-$host-kill-$run.dat
-		sleep 50s
-		{{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-continuous -s -threads 15 -target 200 -p eventFile={{directory}}/config/mongodb/mongodb-event-$host-kill.xml > {{directory}}/results/mongodb/continuous-$host-kill-$run.dat
-		{{ directory }}/script/mongodb-remote-soft mongodb-dataserver start $host
-		sleep 100s
-	done
-done
-{%endif %}
-
-{% if availabilityDrop %}
-sleep 100s
-for host in {%for set in mongodb.replicaSets -%}
-				{%for node in set.nodes -%}
-	                {{ node.server.host.name }}
-	                    {%- if not loop.last -%} 
-	                        {{ ' '}} 
-	                    {%- endif -%}
-                 {%- endfor %}  {{ ' '}}
-            {%- endfor %} {%for node in mongodb.singleNodes -%}
-	                {{ node.server.host.name }}
-	                    {%- if not loop.last -%} 
-	                        {{ ' '}} 
-	                    {%- endif -%}
-                 {%- endfor %}; do 
-            
- 	#mongodb - Continuous run: 900s!
-	for run in 1 2 ;do
-		echo "Continiuum $host DROP $run $(date)" >>  {{ directory }}/results/mongodb/timings.out        
-		
-		{{ directory }}/script/mongodb-delete
-		
-		{{directory}}/YCSB/bin/ycsb load mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-load -s	> {{directory}}/results/mongodb/load-continuous-$host-drop-$run.dat
-		sleep 50s
-		{{directory}}/YCSB/bin/ycsb run mongodb -P {{directory}}/config/mongodb.conf -P {{directory}}/config/workload-ycsb-thomas -P {{directory}}/config/workload-ycsb-thomas-continuous -s -threads 15 -target 200 -p eventFile={{directory}}/config/mongodb/mongodb-event-$host-drop.xml > {{directory}}/results/mongodb/continuous-$host-drop-$run.dat
-		{{ directory }}/script/mongodb-remote-soft mongodb-dataserver start $host
-		sleep 100s
-	done
-done
-{% endif %}
-{% endif %}

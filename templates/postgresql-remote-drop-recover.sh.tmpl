@@ -1,6 +1,7 @@
 #!/bin/bash
 # $1: id
 # $2: where
-
+{% if postgresql.host is defined %}
 {{ directory }}/script/all-remote-network-start $2
 echo "/usr/local/bin/pcp_recovery_node -d 10 localhost 9898 thesis thesis  $1" | ssh {{postgresql.host.name}}
+{% endif %}
